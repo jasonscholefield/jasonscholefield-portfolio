@@ -1,0 +1,40 @@
+---
+const lines = [
+  'Who I am',
+  'What I do',
+  'What I care about',
+  'Where I&rsquo;ve been',
+  'What&rsquo;s next',
+];
+---
+
+<section class="flex min-h-screen flex-col justify-between px-6 pt-32 pb-10 sm:px-8">
+  <div>
+    <p class="text-sm text-fg-subtle">Senior Product Designer &middot; Based in the U.S.</p>
+
+    <ul class="mt-8 sm:mt-12">
+      {
+        lines.map((line, i) => (
+          <li
+            class="border-t border-border py-3 text-[13vw] leading-[0.95] font-medium tracking-tight text-fg-subtle transition-colors last:border-b sm:py-4 sm:text-[6.5vw]"
+            style={`opacity: ${1 - i * 0.12}`}
+            set:html={line}
+          />
+        ))
+      }
+    </ul>
+  </div>
+
+  <div class="mt-16 flex flex-col gap-10 sm:mt-24 sm:flex-row sm:items-end sm:justify-between">
+    <p class="max-w-xl text-2xl leading-snug text-fg sm:text-3xl">
+      I&rsquo;m Jason &mdash; a senior product designer turning complex workflows into simple, high impact experiences.
+    </p>
+
+    <a href="#work" class="group inline-flex items-center gap-3 text-sm text-fg-muted transition-colors hover:text-accent">
+      <span class="flex h-10 w-10 items-center justify-center rounded-full border border-border-strong transition-colors group-hover:border-accent">
+        <span aria-hidden="true">&darr;</span>
+      </span>
+      Scroll to see work
+    </a>
+  </div>
+</section>

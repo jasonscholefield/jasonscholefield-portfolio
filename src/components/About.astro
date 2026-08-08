@@ -1,0 +1,80 @@
+---
+const experience = [
+  { company: 'Universal Technical Institute', role: 'Senior Product Designer', period: 'April 2024 – Current' },
+  { company: 'Medable', role: 'Senior Product Designer (Part-Time Contract)', period: 'April 2025 – November 2025' },
+  { company: 'Drips', role: 'Senior Product Designer (Part-Time Contract)', period: 'January 2025 – June 2025' },
+  { company: 'Freelance', role: 'Product Designer', period: 'February 2023 – March 2024' },
+  { company: 'Sibi', role: 'Lead Product Designer', period: 'March 2022 – February 2023' },
+];
+
+const services = [
+  'Product design',
+  'Design systems',
+  'UX research',
+  'Websites and mobile app design',
+  'Frontend development',
+];
+---
+
+<section id="about" class="border-t border-border px-6 py-24 sm:px-8">
+  <div class="mx-auto grid max-w-6xl gap-16 sm:grid-cols-12">
+    <div class="sm:col-span-4">
+      <h2 class="text-sm text-fg-subtle">About me</h2>
+    </div>
+
+    <div class="space-y-5 text-lg leading-relaxed text-fg-muted sm:col-span-8">
+      <p>
+        I&rsquo;m a creative innovator with a multidisciplinary background in user experience
+        design, product design, and frontend development. With over 15 years of experience in
+        traditional design roles and 10 years focused on practical UX design, I bring a strong
+        blend of visual storytelling, technical execution, and user-centered thinking to every
+        project.
+      </p>
+      <p>
+        Throughout my career, I&rsquo;ve led initiatives from initial concept through to final
+        implementation &mdash; driving outcomes through user research, wireframing, visual and
+        brand design, and frontend development using modern frameworks like React, TypeScript,
+        and Vue.
+      </p>
+      <p>
+        Whether building scalable design systems, prototyping new features, or refining
+        interfaces for usability, I focus on delivering meaningful, measurable results. Great
+        design is more than aesthetics &mdash; it&rsquo;s about creating experiences that are
+        intuitive, engaging, and built to perform.
+      </p>
+      <p class="text-fg">It&rsquo;s about solving problems through thoughtful, visually compelling design.</p>
+    </div>
+
+    <div class="sm:col-span-4">
+      <h3 class="text-sm text-fg-subtle">Experience</h3>
+    </div>
+    <div class="sm:col-span-8">
+      <ul class="divide-y divide-border border-y border-border">
+        {
+          experience.map((job) => (
+            <li class="flex flex-col gap-1 py-5 sm:flex-row sm:items-baseline sm:justify-between">
+              <div>
+                <p class="text-fg">{job.company}</p>
+                <p class="text-sm text-fg-muted">{job.role}</p>
+              </div>
+              <p class="text-sm text-fg-subtle">{job.period}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="sm:col-span-4">
+      <h3 class="text-sm text-fg-subtle">Services</h3>
+    </div>
+    <div class="sm:col-span-8">
+      <ul class="grid gap-3 sm:grid-cols-2">
+        {
+          services.map((service) => (
+            <li class="rounded-lg border border-border px-4 py-3 text-fg-muted">{service}</li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>

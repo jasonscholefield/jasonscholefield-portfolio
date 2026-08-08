@@ -1,0 +1,41 @@
+---
+const nav = [
+  { label: 'Work', href: '/#work' },
+  { label: 'About', href: '/#about' },
+  { label: 'Contact', href: '/#contact' },
+];
+---
+
+<header class="fixed top-0 left-0 right-0 z-50 border-b border-border/0">
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-5 sm:px-8">
+    <a href="/" class="text-sm font-medium tracking-tight text-fg">
+      Jason Scholefield
+    </a>
+    <nav class="hidden items-center gap-8 sm:flex">
+      {
+        nav.map((item) => (
+          <a
+            href={item.href}
+            class="text-sm text-fg-muted transition-colors hover:text-fg"
+          >
+            {item.label}
+          </a>
+        ))
+      }
+      <a
+        href="https://drive.google.com/file/d/1RVYE_spZ6m0UOX3GlUgR9lWlevMnIrPH/view?usp=sharing"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="rounded-full border border-border-strong px-4 py-1.5 text-sm text-fg transition-colors hover:border-accent hover:text-accent"
+      >
+        Resume
+      </a>
+    </nav>
+    <a
+      href="/#contact"
+      class="text-sm text-fg-muted transition-colors hover:text-fg sm:hidden"
+    >
+      Menu
+    </a>
+  </div>
+</header>
