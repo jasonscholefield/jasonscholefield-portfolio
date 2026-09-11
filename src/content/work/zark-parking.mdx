@@ -1,0 +1,132 @@
+---
+coverImage: "../../assets/work/zark-parking.png"
+screenshots:
+  - "../../assets/work/zark-parking/img1.png"
+  - "../../assets/work/zark-parking/img2.png"
+client: "Zark Parking"
+title: "Maximizing multifamily parking assets while improving resident experience"
+summary: "A marketplace-style parking platform balancing resident discovery, property manager tools, and real-time availability across multifamily communities."
+category: "Product Design"
+tags: ["Marketplace", "PropTech", "0 to 1"]
+year: "2022"
+role: "Senior Product Designer, Frontend Developer (React + TypeScript)"
+responsibilities: "0 to 1 product, resident + manager tools"
+featured: true
+order: 4
+---
+import ProjectOverview from '../../components/content/ProjectOverview.astro';
+import ContentSplit from '../../components/content/ContentSplit.astro';
+import ContentImageStack from '../../components/content/ContentImageStack.astro';
+import Callout from '../../components/content/Callout.astro';
+import LearningsGrid from '../../components/content/LearningsGrid.astro';
+import SmartImage from '../../components/SmartImage.astro';
+import ClickSlider from '../../components/ClickSlider.astro';
+import problemImg from '../../assets/work/zark-parking/img3.png';
+import onboardingImg from '../../assets/work/zark-parking/onboarding.png';
+import slide1 from '../../assets/work/zark-parking/slider-1.png';
+import slide2 from '../../assets/work/zark-parking/slider-2.png';
+import slide3 from '../../assets/work/zark-parking/slider-3.png';
+import slide4 from '../../assets/work/zark-parking/slider-4.png';
+import slide5 from '../../assets/work/zark-parking/slider-5.png';
+import slide6 from '../../assets/work/zark-parking/slider-6.png';
+import slide7 from '../../assets/work/zark-parking/slider-7.png';
+import slide8 from '../../assets/work/zark-parking/slider-8.png';
+import slide9 from '../../assets/work/zark-parking/slider-9.png';
+import marketing1 from '../../assets/work/zark-parking/marketing-1.png';
+import marketing2 from '../../assets/work/zark-parking/marketing-2.png';
+
+<ProjectOverview
+  goals={[
+    { title: 'Reduce lost revenue:', description: 'turn chronically underutilized parking into a monetized asset instead of a sunk cost.' },
+    { title: 'Serve every stakeholder:', description: 'residents, guests, property managers, and owners all needed a system simple enough to use without training.' },
+    { title: 'Cut manual coordination:', description: 'replace ad hoc enforcement and manual space assignment with self-serve discovery and reservation.' },
+    { title: 'Fit into existing operations:', description: 'integrate with the property management systems communities already run on, rather than replacing them.' },
+  ]}
+>
+  <p>Zark was founded by veteran apartment developers who'd lived the problem firsthand: parking is a chronic, top-three resident complaint at multifamily properties, and building more of it is cost-prohibitive. I designed the resident and property-manager experience across Zark's three offerings, short-term parking, long-term rentable items, and parking enforcement, aimed at turning underused spaces into revenue without adding operational overhead.</p>
+</ProjectOverview>
+
+<ContentSplit heading="The Problem" image={problemImg} imageAlt="An illustration of the Zark Parking app next to a row of parked cars in a lot" imagePosition="right" notes={[
+  { label: 'What residents and guests dealt with', text: "Circling the lot looking for an open space, with no way to know what was available before showing up." },
+  { label: 'What property teams needed', text: 'A way to monitor and enforce parking without manual patrols eating into staff time.' },
+]}>
+  <p>Parking is a recurring pain point that impacts reputation, retention, and operations for multifamily properties. Residents struggled to locate available spaces, property teams relied on manual processes, unutilized spaces represented lost revenue, and enforcement consumed staff resources.</p>
+  <p>Building more parking wasn't an option: construction at existing properties is cost-prohibitive. The real opportunity was making better use of the spaces already there.</p>
+</ContentSplit>
+
+<Callout eyebrow="Problem to solve" center>
+  <p>The parking already existed. It just wasn't being used, tracked, or enforced.</p>
+</Callout>
+
+## Strategy & Execution
+
+Design priorities balanced multiple user types, real-time availability, and integrations with the property management systems communities already used, like Yardi, ResMan, and Entrata. That meant building toward three related but distinct offerings instead of a single flow: short-term parking for residents and their guests, long-term rentable items like storage and additional spaces, and parking enforcement so communities can identify unauthorized vehicles at any hour, no on-site patrol required.
+
+Across all three, the same priorities held:
+
+- Clear discovery mechanisms for available spaces
+- Streamlined reservation workflows for both short- and long-term parking
+- Transparent status communication for residents and guests
+- Manager monitoring tools and unified operational dashboards
+
+<div class="not-prose relative left-1/2 right-1/2 -mx-[50vw] w-screen px-6 py-10 sm:px-8 sm:py-16">
+  <div class="mx-auto max-w-6xl">
+    <div class="mx-auto max-w-3xl text-left">
+      <h3 class="text-2xl font-medium tracking-tight text-fg">A Reservation in a Few Taps</h3>
+      <div class="mt-4 space-y-4 text-base leading-relaxed text-fg-muted">
+        <p>A resident's reservation moves through five short steps: check the dashboard for an assigned space, set a date and time, choose the zone closest to their destination, add a payment method, and get a confirmed, mapped spot. Guests go through the same flow, so a visiting friend or family member never has to guess where they're allowed to park.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p class="not-prose -mb-6 text-lg font-medium text-fg sm:-mb-10">Here's that same reservation end to end, from logging in to reviewing it later from the dashboard.</p>
+
+<ClickSlider
+  images={[slide1, slide2, slide3, slide4, slide5, slide6, slide7, slide8, slide9]}
+  alt="A resident logging in, making a reservation, and reviewing it from their dashboard"
+  constrainHeight
+  captions={[
+    'Logging in to get started.',
+    'Signing the user in.',
+    'Selecting the property where they need to park.',
+    'Choosing a date and time for the reservation.',
+    'Choosing the zone closest to their destination.',
+    'Selecting a payment method.',
+    "If something goes wrong, the reservation details stay intact so nothing has to be redone.",
+    'The reservation is confirmed, with a space assigned.',
+    'Reviewing current and past reservations from the dashboard.',
+  ]}
+/>
+
+<div class="not-prose relative left-1/2 right-1/2 -mx-[50vw] w-screen px-6 py-10 sm:px-8 sm:py-16">
+  <div class="mx-auto max-w-6xl">
+    <div class="max-w-3xl">
+      <h3 class="text-2xl font-medium tracking-tight text-fg">Onboarding That Explains Itself</h3>
+      <div class="mt-4 space-y-4 text-base leading-relaxed text-fg-muted">
+        <p>The product had to work for residents, guests, property managers, and owners alike, with no extensive training or support. A short onboarding flow front-loads the only things a first-time user needs: where they're parking, what they're driving, and how they're paying, so the rest of the app stays out of the way.</p>
+      </div>
+    </div>
+    <div class="mt-8">
+      <SmartImage src={onboardingImg} alt="The Zark Parking onboarding flow, walking a new user through selecting a destination, adding vehicle information, and paying for a spot" width={2400} lightbox class="h-auto w-full" />
+    </div>
+  </div>
+</div>
+
+<LearningsGrid heading="Outcome" items={[
+  { icon: 'layers', title: 'Reduced Manual Coordination', description: 'Self-serve discovery and reservation replaced ad hoc enforcement and manual space assignment.' },
+  { icon: 'compass', title: 'Improved Resident Experience', description: 'Residents and their guests could find and reserve a space instead of circling the lot.' },
+  { icon: 'scale', title: 'Monetized Underutilized Spaces', description: 'Previously unassigned or unused spaces became a new revenue stream for properties.' },
+  { icon: 'branch', title: 'Built to Scale Across Communities', description: 'Zark expanded into new apartment complexes on the same platform and operational model.' },
+]} />
+
+<ContentImageStack
+  heading="Getting the Word Out"
+  images={[marketing1, marketing2]}
+  imageAlt="A Zark Parking street ad reading 'That could have been your spot,' composited over real curbside parking photos"
+  caption="The same ad, dropped over real street parking in two different cities: the pitch works wherever there's a car in a spot someone else needed."
+>
+  <p>Beyond the product itself, I helped put together marketing materials to support Zark's launch, including an ad campaign built on a simple, slightly guilt-tripping idea: show drivers exactly what they missed by not using the app. It's the same "circling the lot" problem the product solves, aimed back at the street it happens on.</p>
+</ContentImageStack>
+
+<Callout quote="Zark has provided us with an affordable, quick, and convenient way to offer residents a parking solution, and our communities are happier for it!" attribution="Mike Clow, Executive Director, Real Estate — Greystar Real Estate Partners" center />

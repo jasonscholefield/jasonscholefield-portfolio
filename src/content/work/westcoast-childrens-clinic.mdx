@@ -1,0 +1,115 @@
+---
+coverImage: "../../assets/work/westcoast-childrens-clinic.png"
+screenshots:
+  - "../../assets/work/westcoast-childrens-clinic/img1.png"
+  - "../../assets/work/westcoast-childrens-clinic/img2.png"
+client: "Westcoast Children's Clinic"
+title: "Transforming a paper-based intake process into an accessible digital workflow"
+summary: "Redesigning intake around how phone representatives actually talk to families, not around the form they were copying to screen."
+category: "Product Design"
+tags: ["Healthcare", "Accessibility", "Workflow Design"]
+year: "2020"
+role: "Product Designer"
+responsibilities: "Workflow redesign, accessibility"
+stats:
+  - label: "Format"
+    value: "Paper → Digital"
+  - label: "Trend insight surfaced"
+    value: "Seasonal need spikes"
+featured: false
+order: 5
+---
+import ProjectOverview from '../../components/content/ProjectOverview.astro';
+import ContentImageFeature from '../../components/content/ContentImageFeature.astro';
+import Callout from '../../components/content/Callout.astro';
+import LearningsGrid from '../../components/content/LearningsGrid.astro';
+import ClickSlider from '../../components/ClickSlider.astro';
+import dashboardImg2 from '../../assets/work/westcoast-childrens-clinic/dashboard-2.png';
+import dashboardImg3 from '../../assets/work/westcoast-childrens-clinic/dashboard-3.png';
+import slide1 from '../../assets/work/westcoast-childrens-clinic/slider-1.png';
+import slide4 from '../../assets/work/westcoast-childrens-clinic/slider-4.png';
+import slide2 from '../../assets/work/westcoast-childrens-clinic/slider-2.png';
+import slide3 from '../../assets/work/westcoast-childrens-clinic/slider-3.png';
+import slide7 from '../../assets/work/westcoast-childrens-clinic/slider-7.png';
+import slide6 from '../../assets/work/westcoast-childrens-clinic/slider-6.png';
+import slide2_1 from '../../assets/work/westcoast-childrens-clinic/slider2-1.png';
+import slide2_3 from '../../assets/work/westcoast-childrens-clinic/slider2-3.png';
+import slide2_2 from '../../assets/work/westcoast-childrens-clinic/slider2-2.png';
+import slide2_4 from '../../assets/work/westcoast-childrens-clinic/slider2-4.png';
+import slide2_5 from '../../assets/work/westcoast-childrens-clinic/slider2-5.png';
+
+<ProjectOverview
+  goals={[
+    { title: 'Follow the conversation, not the document:', description: "reorder the intake questions to match how a phone call actually unfolds, instead of the paper form's layout." },
+    { title: 'Reduce missed or incorrect information:', description: 'cut the backtracking and page-flipping that happened when the form fought the flow of the call.' },
+    { title: 'Build in accessibility from the start:', description: 'keyboard navigation and accessibility standards as a baseline, not an afterthought.' },
+    { title: 'Surface trends, not just records:', description: 'give staff a reporting view that turns individual intakes into patterns worth acting on.' },
+  ]}
+>
+  <p>Rather than simply digitizing the existing form, research focused on how intake calls actually happened. Phone representatives constantly jumped between form sections, struggled with information scattered across pages, and carried high cognitive load during emotionally sensitive conversations. The form was technically complete, but operationally misaligned. Representatives use this tool at a desk, so the product itself is desktop-only; the mobile mockups shown here were designed as a forward-looking exercise, in case the clinic ever wanted to make the tool mobile-friendly down the line.</p>
+</ProjectOverview>
+
+## The Problem
+
+- Intake handled entirely on paper
+- Confusion during live calls, with frequent backtracking
+- Increased chance of missed or incorrect information
+- Limited accessibility support
+- No trend analysis capability
+- Staff working around the tool rather than being supported by it
+
+<Callout eyebrow="Problem to solve" center>
+  <p>The form needed to follow the conversation, not the document.</p>
+</Callout>
+
+## Strategy & Execution
+
+Questions were reordered to match natural dialogue flow, conditional logic reduced unnecessary questions, language and visual hierarchy were simplified, and the flow was designed for keyboard navigation and accessibility standards from the start.
+
+To see it in practice, here's a screening moving through its questions one at a time, category by category, from the first question to a completed risk score.
+
+<ClickSlider
+  images={[slide1, slide4, slide2, slide3, slide7, slide6]}
+  alt="A representative completing a screening, one question at a time, through to a completed risk score"
+  constrainHeight
+  captions={[
+    'Starting the screening: the first question in Housing and Caregiving.',
+    'Working through the rest of the category before moving on.',
+    'Midway through the screening, now on Environment and Exposure.',
+    'Each category closes with its own score before moving to the next.',
+    'All six categories complete: an overall risk score, with the range it falls into.',
+    'Any category can be expanded to see exactly which items drove the score.',
+  ]}
+/>
+
+Two versions of the form existed side by side, checking every relevant item in a category at once rather than answering one question at a time, and the clinic chose which one to use for their own internal reasons.
+
+<ClickSlider
+  images={[slide2_1, slide2_3, slide2_2, slide2_4, slide2_5]}
+  alt="An alternate checklist-style version of the same screening, with a built-in consistency check"
+  constrainHeight
+  captions={[
+    'Checking every relevant item in a category at once, instead of one question at a time.',
+    "A built-in check catches a mismatch, like a checked item paired with 'No Concern.'",
+    'The same checklist pattern applied to Environment and Exposure.',
+    'Finishing all six categories reveals the overall score, ready to submit.',
+    'A simpler breakdown here: one line per category, instead of an expandable list.',
+  ]}
+/>
+
+<ContentImageFeature heading="Reporting That Surfaces Patterns" image={dashboardImg3} imageAlt="An agency-level insights dashboard showing concern levels and demographic breakdowns across screenings" preserveAspect>
+  <p>Individual screenings feed into an agency-level reporting view: concern levels across the caseload, demographic breakdowns, and trends over a chosen date range. This is where the paper process had nothing to offer. Every completed screening became data the paper version simply never captured.</p>
+</ContentImageFeature>
+
+<ContentImageFeature heading="A Client's History in One Place" image={dashboardImg2} imageAlt="A client profile showing screening history, a CSE-IT score trend over time, and attached documents" preserveAspect>
+  <p>Each client's profile tracks their screening history and score trend over time, alongside notes and attachments, so a change in risk is visible at a glance instead of buried across separate paper files.</p>
+</ContentImageFeature>
+
+<LearningsGrid heading="Outcome" items={[
+  { icon: 'compass', title: 'Clearer, Faster Intake Calls', description: 'Reduced friction during sensitive conversations, with a workflow aligned to how representatives actually work.' },
+  { icon: 'eye', title: 'Fewer Missed or Incorrect Answers', description: 'Reordered questions and built-in consistency checks cut the backtracking that led to bad data.' },
+  { icon: 'layers', title: 'Accessible From the Start', description: 'Keyboard navigation and accessibility standards were part of the original design, not retrofitted later.' },
+  { icon: 'scale', title: 'Patterns the Paper Process Missed', description: 'A reporting dashboard surfaced trends, including that December consistently showed increased housing-related needs, enabling proactive resource planning.' },
+]} />
+
+Digitizing a process requires rethinking it, not copying it. Designing for empathy includes supporting the care providers, not just the families they serve. Accessibility improvements also tend to improve usability for everyone.

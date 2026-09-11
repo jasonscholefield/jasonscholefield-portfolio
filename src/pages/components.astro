@@ -1,0 +1,196 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CaseStudyLeadImages from '../components/CaseStudyLeadImages.astro';
+import CaseStudyGallery from '../components/CaseStudyGallery.astro';
+import CompareSlider from '../components/CompareSlider.astro';
+import ContentSplit from '../components/content/ContentSplit.astro';
+import ContentImageStack from '../components/content/ContentImageStack.astro';
+import Callout from '../components/content/Callout.astro';
+import Highlight from '../components/content/Highlight.astro';
+
+const ph = (w: number, h: number, text: string, bg = '1a1a1f', fg = 'ffb454') =>
+  `https://placeholdit.com/${w}x${h}/${bg}/${fg}?text=${encodeURIComponent(text).replace(/%20/g, '+')}`;
+
+const lorem =
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
+const lorem2 = 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
+
+const specs = [
+  {
+    id: 'lead-images',
+    title: 'CaseStudyLeadImages',
+    desc: 'One or two full-width images at the very top of a case study, directly under the header. Tight internal rhythm (24px above, 10px between images) by design — it\'s meant to feel like a single opening beat, not a gallery.',
+    file: 'src/components/CaseStudyLeadImages.astro',
+    props: 'images: (image | url)[] (1–2 typical), alt: string',
+    usage: 'Set the `screenshots` array in a case study’s frontmatter — the first two entries are used here automatically by [id].astro.',
+    prompt: '“Use these two images as the lead images at the top of the X case study.”',
+  },
+  {
+    id: 'gallery',
+    title: 'CaseStudyGallery',
+    desc: 'One or more full-width images, each cropped to 16:9 (top-anchored, not center-cropped) with generous padding between them. Used for supplementary screenshots later on the page — or anywhere in the MDX narrative if you import it directly.',
+    file: 'src/components/CaseStudyGallery.astro',
+    props: 'images: (image | url)[], alt: string',
+    usage: 'Frontmatter `screenshots` beyond the first two feed this automatically. To place extra images inline in the narrative, import CaseStudyGallery in the .mdx file and drop it wherever you want.',
+    prompt: '“Add another full-width screenshot after the [X] section, showing Y.”',
+  },
+  {
+    id: 'compare-slider',
+    title: 'CompareSlider',
+    desc: 'A before/after image comparison — move the cursor left/right over the image to reveal more of the "before" or "after" state. No click-and-drag needed. Resets to center on mouse-leave.',
+    file: 'src/components/CompareSlider.astro',
+    props: 'before, after: image | url, beforeLabel?, afterLabel?: string (default "Before"/"After"), alt: string',
+    usage: 'Set `beforeAfters: [{ before, after, beforeLabel?, afterLabel? }]` in frontmatter for sliders that render automatically after the lead images, or import CompareSlider directly into the .mdx narrative for sliders placed inline in the story.',
+    prompt: '“Add a before/after slider comparing [old screenshot] and [new screenshot], labeled “Old” and “New.””',
+  },
+  {
+    id: 'content-split',
+    title: 'ContentSplit',
+    desc: 'A heading and one or more paragraphs next to a single image, side by side. Works with the image on either side — alternate left/right across a page for visual rhythm.',
+    file: 'src/components/content/ContentSplit.astro',
+    props: 'heading: string, image: image | url, imageAlt: string, imagePosition?: "left" | "right" (default "right"), children = body paragraphs',
+    usage: 'Import into a case study’s .mdx file and drop it inline in the narrative, wherever the story calls for an illustrated aside.',
+    prompt: '“Add a two-column section titled “[heading]” with this image on the [left/right], and this text: …”',
+  },
+  {
+    id: 'content-image-stack',
+    title: 'ContentImageStack',
+    desc: 'A heading and intro text, followed by a row of 1–3 images below (wrapping on mobile, with a slight alternating stagger for visual interest). Good for showing a set of related screens or states together.',
+    file: 'src/components/content/ContentImageStack.astro',
+    props: 'heading: string, images: (image | url)[], imageAlt: string, caption?: string, children = body paragraphs',
+    usage: 'Import into a case study’s .mdx file and drop it inline in the narrative.',
+    prompt: '“Add a section titled “[heading]” with these 2–3 images in a row underneath, and this caption: …”',
+  },
+  {
+    id: 'callout',
+    title: 'Callout',
+    desc: 'A full-bleed, lighter-background band that breaks out of the narrow text column. Two variants: a large pull-quote (with optional attribution), or a heading + paragraph highlight. Uses margin (not padding) for its outer spacing, so the color only covers its own content, not the gap around it.',
+    file: 'src/components/content/Callout.astro',
+    props: 'EITHER quote: string + attribution?: string, OR heading?: string + children = body paragraphs',
+    usage: 'Import into a case study’s .mdx file and drop it inline — great for promoting an existing blockquote, or for a standalone "the real lesson" style recap.',
+    prompt: '“Pull this line out as a big quote block” or “Add a highlighted callout titled “[heading]” recapping …”',
+  },
+  {
+    id: 'highlight',
+    title: 'Highlight',
+    desc: 'An inline marker for calling out a key phrase mid-sentence — a soft rounded highlight using the site\'s amber accent at low opacity, text color unchanged.',
+    file: 'src/components/content/Highlight.astro',
+    props: 'children = the phrase to highlight',
+    usage: 'Import into a case study\'s .mdx file and wrap the specific words or phrase you want to call out, inline within a paragraph.',
+    prompt: '“Highlight the phrase \'[X]\' in that paragraph.”',
+  },
+];
+---
+
+<Layout title="Components | Internal" description="Internal component reference — not linked from navigation.">
+  <section class="px-6 pt-32 pb-16 sm:px-8">
+    <div class="mx-auto max-w-6xl">
+      <p class="text-sm text-fg-subtle">Internal &middot; not linked from navigation</p>
+      <h1 class="mt-3 text-3xl font-medium tracking-tight text-fg sm:text-4xl">Case study components</h1>
+      <p class="mt-4 max-w-2xl text-base leading-relaxed text-fg-muted">
+        Every reusable block used to build out a case study page, shown live with placeholder content. For each one:
+        what it's for, its variations, how to wire it up, and what to tell me if you want it added somewhere.
+      </p>
+    </div>
+  </section>
+
+  <!-- 1. CaseStudyLeadImages -->
+  <CaseStudyLeadImages images={[ph(1600, 900, 'Lead Image 1'), ph(1600, 900, 'Lead Image 2')]} alt="Lead images placeholder" />
+
+  <!-- 2. CaseStudyGallery -->
+  <CaseStudyGallery images={[ph(1600, 900, 'Gallery Image')]} alt="Gallery placeholder" />
+
+  <!-- 3. CompareSlider -->
+  <CompareSlider
+    before={ph(1600, 900, 'Before', '2a2a30', '9a9aa2')}
+    after={ph(1600, 900, 'After', '3a2a1a', 'ffb454')}
+    alt="Compare slider placeholder"
+  />
+
+  <!-- 5. ContentSplit — right -->
+  <ContentSplit heading="Section Heading (image right)" image={ph(900, 675, 'Image Right')} imageAlt="Content split placeholder" imagePosition="right">
+    <p>{lorem}</p>
+    <p>{lorem2}</p>
+  </ContentSplit>
+
+  <!-- 5b. ContentSplit — left -->
+  <ContentSplit heading="Section Heading (image left)" image={ph(900, 675, 'Image Left')} imageAlt="Content split placeholder" imagePosition="left">
+    <p>{lorem}</p>
+  </ContentSplit>
+
+  <!-- 6. ContentImageStack -->
+  <ContentImageStack
+    heading="Section Heading With Image Row"
+    images={[ph(700, 525, 'Image 1'), ph(700, 525, 'Image 2'), ph(700, 525, 'Image 3')]}
+    imageAlt="Content image stack placeholder"
+    caption="Optional caption text describing the images above."
+  >
+    <p>{lorem}</p>
+  </ContentImageStack>
+
+  <!-- 7. Callout — quote -->
+  <Callout quote="This is a pull-quote — a short, punchy line worth pulling out of the body text." attribution="Optional attribution" />
+
+  <!-- 7b. Callout — heading -->
+  <Callout heading="Or a Heading + Highlight">
+    <p>{lorem}</p>
+  </Callout>
+
+  <!-- 8. Highlight — color options -->
+  <section class="px-6 py-16 sm:px-8">
+    <div class="mx-auto max-w-6xl">
+      <h2 class="text-2xl font-medium tracking-tight text-fg">Highlight — color options, round 4</h2>
+      <p class="mt-2 max-w-2xl text-sm leading-relaxed text-fg-muted">
+        E and F kept. K–N (blue, teal, purple, pink) are out. O–S try a different set: green, sky blue, indigo, magenta, and a muted slate — same solid-chip, dark-ink treatment throughout.
+      </p>
+
+      <div class="mt-8 flex flex-col gap-6">
+        {
+          [
+            { label: 'E — Amber solid chip (60%), dark ink', style: 'background-color: color-mix(in srgb, var(--color-accent) 60%, transparent); color: #1c1810;' },
+            { label: 'F — Amber, bolder chip (75%), dark ink', style: 'background-color: color-mix(in srgb, var(--color-accent) 75%, transparent); color: #1c1810;' },
+            { label: 'O — Green, solid chip (60%), dark ink', style: 'background-color: color-mix(in srgb, #4ade80 60%, transparent); color: #10220f;' },
+            { label: 'P — Sky blue, solid chip (60%), dark ink', style: 'background-color: color-mix(in srgb, #38bdf8 60%, transparent); color: #0c1f2b;' },
+            { label: 'Q — Indigo, solid chip (60%), dark ink', style: 'background-color: color-mix(in srgb, #818cf8 60%, transparent); color: #171b3a;' },
+            { label: 'R — Magenta, solid chip (60%), dark ink', style: 'background-color: color-mix(in srgb, #e879f9 60%, transparent); color: #2b1230;' },
+            { label: 'S — Muted slate, solid chip (60%), dark ink', style: 'background-color: color-mix(in srgb, #94a3b8 60%, transparent); color: #10151c;' },
+          ].map((opt) => (
+            <div>
+              <p class="text-xs tracking-wide text-fg-subtle uppercase">{opt.label}</p>
+              <p class="mt-3 max-w-2xl text-lg leading-relaxed text-fg-muted">
+                This project needed a <mark class="rounded-[0.3em] px-[0.3em] py-[0.05em] [box-decoration-break:clone] [-webkit-box-decoration-break:clone]" style={opt.style}>data-driven pivot</mark> away from a redesign that looked right but converted worse, which meant trusting <mark class="rounded-[0.3em] px-[0.3em] py-[0.05em] [box-decoration-break:clone] [-webkit-box-decoration-break:clone]" style={opt.style}>behavioral evidence over visual polish</mark>.
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Documentation -->
+  <section class="px-6 py-16 sm:px-8">
+    <div class="mx-auto max-w-6xl">
+      <h2 class="text-2xl font-medium tracking-tight text-fg">Reference</h2>
+      <div class="mt-8 flex flex-col gap-4">
+        {
+          specs.map((s) => (
+            <div id={s.id} class="scroll-mt-24 rounded-xl border border-border bg-bg-elevated p-6 sm:p-8">
+              <h3 class="text-lg font-medium text-fg">{s.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-fg-muted">{s.desc}</p>
+              <dl class="mt-4 grid gap-3 border-t border-border pt-4 sm:grid-cols-[100px_1fr]">
+                <dt class="text-xs text-fg-subtle">File</dt>
+                <dd class="font-mono text-xs text-fg-muted">{s.file}</dd>
+                <dt class="text-xs text-fg-subtle">Props</dt>
+                <dd class="font-mono text-xs text-fg-muted">{s.props}</dd>
+                <dt class="text-xs text-fg-subtle">How to use</dt>
+                <dd class="text-xs leading-relaxed text-fg-muted">{s.usage}</dd>
+                <dt class="text-xs text-fg-subtle">Ask me</dt>
+                <dd class="text-xs leading-relaxed text-fg-muted italic">{s.prompt}</dd>
+              </dl>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</Layout>

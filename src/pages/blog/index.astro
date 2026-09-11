@@ -1,0 +1,54 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+const dateFormatter = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' });
+---
+
+<Layout title="Writing | Jason Scholefield" description="Notes on product design, design systems, and building things end to end.">
+  <section class="px-6 pt-36 pb-16 sm:px-8 sm:pt-44">
+    <div class="mx-auto max-w-6xl">
+      <p class="text-sm text-fg-subtle">Writing</p>
+      <h1 class="mt-3 max-w-2xl text-3xl leading-tight font-medium tracking-tight text-fg sm:text-4xl">
+        Notes on product design, design systems, and building things end to end.
+      </h1>
+    </div>
+  </section>
+
+  <section class="px-6 pb-24 sm:px-8">
+    <div class="mx-auto max-w-6xl">
+      {
+        posts.length === 0 ? (
+          <p class="border-t border-border py-12 text-sm text-fg-muted">Nothing published yet. Check back soon.</p>
+        ) : (
+          posts.map((post) => (
+            <article class="group relative -mx-4 border-t border-border px-4 py-8 transition-colors first:border-t-0 hover:bg-bg-elevated sm:-mx-6 sm:px-6">
+              <div class="grid gap-2 sm:grid-cols-12 sm:items-baseline sm:gap-6">
+                <p class="text-sm text-fg-subtle sm:col-span-2">{dateFormatter.format(post.data.date)}</p>
+                <div class="sm:col-span-10">
+                  <h2 class="text-xl leading-snug text-fg transition-colors group-hover:text-accent sm:text-2xl">
+                    <a href={`/blog/${post.id}`} class="after:absolute after:inset-0 after:content-['']">
+                      {post.data.title}
+                    </a>
+                  </h2>
+                  <p class="mt-2 max-w-2xl text-sm leading-relaxed text-fg-muted">{post.data.summary}</p>
+                  {post.data.tags.length > 0 && (
+                    <ul class="mt-3 flex flex-wrap gap-2">
+                      {post.data.tags.map((tag) => (
+                        <li class="rounded-full border border-border-strong px-3 py-1 text-xs text-fg-muted">{tag}</li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </div>
+            </article>
+          ))
+        )
+      }
+    </div>
+  </section>
+</Layout>

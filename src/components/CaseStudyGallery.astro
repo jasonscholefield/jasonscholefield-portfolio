@@ -1,0 +1,31 @@
+---
+import SmartImage from './SmartImage.astro';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  images?: (ImageMetadata | string)[];
+  alt: string;
+  heading?: string;
+  caption?: string;
+}
+
+const { images, alt, heading, caption } = Astro.props;
+---
+
+{
+  images && images.length > 0 && (
+    <div class="not-prose relative left-1/2 right-1/2 -mx-[50vw] w-screen px-6 py-10 sm:px-8 sm:py-16">
+      <div class="mx-auto max-w-6xl">
+        {heading && <h3 class="text-2xl font-medium tracking-tight text-fg">{heading}</h3>}
+        <div class={`flex flex-col gap-6 ${heading ? 'mt-6' : ''}`}>
+          {images.map((src) => (
+            <div class="aspect-video w-full overflow-hidden">
+              <SmartImage src={src} alt={alt} width={2400} lightbox class="h-full w-full object-cover object-top" />
+            </div>
+          ))}
+        </div>
+        {caption && <p class="mt-4 text-center text-sm text-fg-subtle italic">{caption}</p>}
+      </div>
+    </div>
+  )
+}

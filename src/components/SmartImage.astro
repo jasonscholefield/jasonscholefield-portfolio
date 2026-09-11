@@ -1,0 +1,41 @@
+---
+import { Image, getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  src: ImageMetadata | string;
+  alt: string;
+  width?: number;
+  quality?: number | 'low' | 'mid' | 'high' | 'max';
+  class?: string;
+  lightbox?: boolean;
+}
+
+const { src, alt, width = 1600, quality = 100, class: className, lightbox = false } = Astro.props;
+
+// Never upscale past the source's real resolution — requesting more width
+// than the original has just forces Astro to invent pixels, which is what
+// makes an image look soft/blurry rather than genuinely sharper.
+const resolvedWidth = typeof src === 'string' ? width : Math.min(width, src.width);
+
+let fullSrc: string | undefined;
+if (lightbox) {
+  fullSrc =
+    typeof src === 'string'
+      ? src
+      : (await getImage({ src, width: Math.min(src.width, 2400), format: 'webp', quality: 100 })).src;
+}
+
+const triggerClass = lightbox ? `${className ?? ''} cursor-zoom-in`.trim() : className;
+const triggerProps = lightbox
+  ? { 'data-lightbox-src': fullSrc, 'data-lightbox-alt': alt, tabindex: 0, role: 'button' }
+  : {};
+---
+
+{
+  typeof src === 'string' ? (
+    <img src={src} alt={alt} class={triggerClass} loading="lazy" {...triggerProps} />
+  ) : (
+    <Image src={src} alt={alt} width={resolvedWidth} quality={quality} class={triggerClass} {...triggerProps} />
+  )
+}

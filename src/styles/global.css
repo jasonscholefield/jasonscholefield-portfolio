@@ -15,8 +15,12 @@
   --color-fg-muted: #9a9aa2;
   --color-fg-subtle: #6c6c74;
 
-  --color-accent: #c6ff5c;
+  --color-accent: #ffb454;
   --color-accent-fg: #0a0a0b;
+
+  --color-hero-1: #ffb454;
+  --color-hero-2: #ff7a45;
+  --color-hero-3: #f2545b;
 }
 
 @layer base {
@@ -24,6 +28,7 @@
     background-color: var(--color-bg);
     color: var(--color-fg);
     scroll-behavior: smooth;
+    overflow-x: clip;
   }
 
   body {

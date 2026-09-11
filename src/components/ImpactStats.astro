@@ -1,0 +1,30 @@
+---
+interface Props {
+  stats: { label: string; value: string }[];
+  heading?: string;
+  description?: string;
+}
+
+const { stats, heading = 'Impact', description } = Astro.props;
+---
+
+<div class="not-prose relative left-1/2 right-1/2 -mx-[50vw] w-screen px-6 py-10 sm:px-8 sm:py-16">
+  <div class="mx-auto max-w-6xl">
+    <div class="text-center">
+      <h3 class="text-2xl font-medium tracking-tight text-fg">{heading}</h3>
+      {description && <p class="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-fg-muted">{description}</p>}
+    </div>
+
+    <div class="mt-10 grid grid-cols-1 divide-y divide-border border-t border-b border-border sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+      {
+        stats.map((stat, i) => (
+          <div class="py-8 first:pt-8 sm:px-8 sm:py-10 sm:first:pl-0 sm:last:pr-0">
+            <p class="font-mono text-xs text-fg-subtle">{String(i + 1).padStart(2, '0')}</p>
+            <p class="mt-4 text-5xl leading-none font-bold tracking-tight text-accent sm:text-6xl">{stat.value}</p>
+            <p class="mt-4 text-xs tracking-wide text-fg-muted uppercase">{stat.label}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</div>

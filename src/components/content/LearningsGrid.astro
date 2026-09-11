@@ -1,0 +1,29 @@
+---
+import Icon from '../Icon.astro';
+import type { IconName } from '../Icon.astro';
+
+interface Props {
+  heading?: string;
+  items: { icon: IconName; title: string; description: string }[];
+}
+
+const { heading = 'What I Learned From This Project', items } = Astro.props;
+---
+
+<div class="not-prose relative left-1/2 right-1/2 -mx-[50vw] w-screen px-6 py-10 sm:px-8 sm:py-16">
+  <div class="mx-auto max-w-6xl">
+    <h3 class="text-center text-2xl font-medium tracking-tight text-fg sm:text-3xl">{heading}</h3>
+
+    <div class="mt-10 grid gap-4 sm:grid-cols-2">
+      {
+        items.map((item) => (
+          <div class="rounded-xl border border-border bg-bg-elevated p-8 text-center">
+            <Icon name={item.icon} class="mx-auto h-7 w-7 text-fg-muted" />
+            <p class="mt-4 text-base font-medium text-fg">{item.title}</p>
+            <p class="mt-2 text-sm leading-relaxed text-fg-muted">{item.description}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</div>

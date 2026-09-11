@@ -1,0 +1,41 @@
+---
+import SmartImage from '../SmartImage.astro';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  heading: string;
+  image: ImageMetadata | string;
+  imageAlt: string;
+  imagePosition?: 'left' | 'right';
+  notes?: { label: string; text: string }[];
+}
+
+const { heading, image, imageAlt, imagePosition = 'right', notes } = Astro.props;
+---
+
+<div class="not-prose relative left-1/2 right-1/2 -mx-[50vw] w-screen px-6 py-10 sm:px-8 sm:py-16">
+  <div class="mx-auto grid max-w-6xl items-center gap-10 sm:grid-cols-2 sm:gap-16">
+    <div class={`order-2 ${imagePosition === 'left' ? 'sm:order-1' : 'sm:order-2'}`}>
+      <SmartImage src={image} alt={imageAlt} width={900} lightbox class="h-auto w-full" />
+    </div>
+    <div class={`order-1 ${imagePosition === 'left' ? 'sm:order-2' : 'sm:order-1'}`}>
+      <h3 class="text-2xl font-medium tracking-tight text-fg">{heading}</h3>
+      <div class="mt-4 space-y-4 text-base leading-relaxed text-fg-muted">
+        <slot />
+      </div>
+
+      {
+        notes && notes.length > 0 && (
+          <div class="mt-6 flex flex-col gap-4">
+            {notes.map((n) => (
+              <div class="rounded-xl border border-border p-4">
+                <p class="text-xs tracking-wide text-fg-subtle uppercase">{n.label}</p>
+                <p class="mt-2 text-sm leading-relaxed text-fg-muted">{n.text}</p>
+              </div>
+            ))}
+          </div>
+        )
+      }
+    </div>
+  </div>
+</div>

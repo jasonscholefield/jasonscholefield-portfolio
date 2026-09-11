@@ -1,6 +1,9 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import CaseStudyGallery from '../../components/CaseStudyGallery.astro';
+import CaseStudyLeadImages from '../../components/CaseStudyLeadImages.astro';
+import CompareSlider from '../../components/CompareSlider.astro';
 
 export async function getStaticPaths() {
   const entries = await getCollection('work');
@@ -11,25 +14,27 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { client, title, summary, category, tags, year, role, tools, stats, liveUrl } = entry.data;
+const { client, title, summary, category, tags, year, role, responsibilities, tools, liveUrl, screenshots, beforeAfters } = entry.data;
+const leadImages = (screenshots ?? []).slice(0, 2);
+const restScreenshots = (screenshots ?? []).slice(2);
 const { Content } = await render(entry);
 ---
 
 <Layout title={`${title} | Jason Scholefield`} description={summary}>
   <article>
-    <header class="px-6 pt-32 pb-16 sm:px-8">
+    <header class="px-6 pt-[100px] pb-8 sm:px-8 sm:pt-32 sm:pb-16">
       <div class="mx-auto max-w-3xl">
         <a href="/#work" class="text-sm text-fg-muted transition-colors hover:text-fg">
           &larr; Back to work
         </a>
 
         <p class="mt-8 text-sm text-fg-subtle">{client} &middot; {category} &middot; {year}</p>
-        <h1 class="mt-3 text-4xl leading-tight font-medium tracking-tight text-fg sm:text-5xl">
+        <h1 class="mt-3 text-3xl leading-tight font-medium tracking-tight text-fg sm:text-4xl">
           {title}
         </h1>
-        <p class="mt-6 text-lg leading-relaxed text-fg-muted">{summary}</p>
+        <p class="mt-5 text-base leading-relaxed text-fg-muted">{summary}</p>
 
-        <div class="mt-8 flex flex-wrap gap-2">
+        <div class="mt-6 flex flex-wrap gap-2">
           {
             tags.map((tag) => (
               <span class="rounded-full border border-border-strong px-3 py-1 text-xs text-fg-muted">
@@ -39,49 +44,70 @@ const { Content } = await render(entry);
           }
         </div>
 
-        <dl class="mt-10 grid grid-cols-2 gap-6 border-y border-border py-6 sm:grid-cols-4">
+        <dl class="mt-8 grid grid-cols-2 gap-6 border-t border-border pt-6 sm:grid-cols-4">
           <div>
             <dt class="text-xs text-fg-subtle">Role</dt>
             <dd class="mt-1 text-sm text-fg">{role}</dd>
           </div>
+          <div>
+            <dt class="text-xs text-fg-subtle">Timeline</dt>
+            <dd class="mt-1 text-sm text-fg">{year}</dd>
+          </div>
+          {
+            responsibilities && (
+              <div>
+                <dt class="text-xs text-fg-subtle">Responsibilities</dt>
+                <dd class="mt-1 text-sm text-fg">{responsibilities}</dd>
+              </div>
+            )
+          }
           {
             tools && tools.length > 0 && (
-              <div>
+              <div class="col-span-2">
                 <dt class="text-xs text-fg-subtle">Tools</dt>
                 <dd class="mt-1 text-sm text-fg">{tools.join(', ')}</dd>
               </div>
             )
           }
-          {
-            liveUrl && (
-              <div>
-                <dt class="text-xs text-fg-subtle">Live</dt>
-                <dd class="mt-1 text-sm">
-                  <a href={liveUrl} target="_blank" rel="noopener noreferrer" class="text-accent hover:opacity-80">
-                    View live &#8599;
-                  </a>
-                </dd>
-              </div>
-            )
-          }
         </dl>
 
-        {
-          stats && stats.length > 0 && (
-            <div class="mt-10 grid grid-cols-2 gap-6 sm:grid-cols-3">
-              {stats.map((stat) => (
-                <div class="rounded-lg border border-border p-5">
-                  <p class="text-2xl font-medium text-accent sm:text-3xl">{stat.value}</p>
-                  <p class="mt-1 text-sm text-fg-muted">{stat.label}</p>
-                </div>
-              ))}
-            </div>
-          )
-        }
+        <div class="mt-8 flex flex-col gap-3">
+          {
+            liveUrl && (
+              <a
+                href={liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex w-full items-center justify-center gap-2 rounded-full bg-accent px-4 py-3 text-sm text-accent-fg transition-opacity hover:opacity-90"
+              >
+                View live <span aria-hidden="true">&#8599;</span>
+              </a>
+            )
+          }
+          <a
+            href="#story"
+            class="flex w-full items-center justify-center gap-2 rounded-full border border-border-strong px-4 py-3 text-sm text-fg transition-colors hover:border-accent hover:text-accent"
+          >
+            Read the case study <span aria-hidden="true">&darr;</span>
+          </a>
+        </div>
       </div>
     </header>
 
-    <div class="px-6 pb-24 sm:px-8">
+    <CaseStudyLeadImages images={leadImages.length > 0 ? leadImages : undefined} alt={title} />
+
+    {
+      beforeAfters &&
+        beforeAfters.map((ba, i) => (
+          <div class={i > 0 ? '-mt-14 sm:-mt-[104px]' : undefined}>
+            <CompareSlider before={ba.before} after={ba.after} beforeLabel={ba.beforeLabel} afterLabel={ba.afterLabel} alt={title} />
+          </div>
+        ))
+    }
+
+    <CaseStudyGallery images={restScreenshots} alt={title} />
+
+    <div id="story" class="scroll-mt-24 px-6 pt-16 pb-24 sm:px-8">
       <div
         class="prose prose-invert mx-auto max-w-3xl prose-headings:font-medium prose-headings:tracking-tight prose-h2:text-2xl prose-h2:mt-16 prose-h2:mb-4 prose-p:leading-relaxed prose-p:text-fg-muted prose-li:text-fg-muted prose-strong:text-fg prose-blockquote:border-accent prose-blockquote:text-fg prose-blockquote:not-italic prose-a:text-accent"
       >
@@ -89,8 +115,8 @@ const { Content } = await render(entry);
       </div>
     </div>
 
-    <div class="border-t border-border px-6 py-16 sm:px-8">
-      <div class="mx-auto flex max-w-3xl flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <div class="border-t border-border py-16">
+      <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 sm:px-8">
         <a href="/#work" class="text-sm text-fg-muted transition-colors hover:text-fg">
           &larr; Back to all work
         </a>

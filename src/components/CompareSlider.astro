@@ -1,0 +1,254 @@
+---
+import { getImage } from 'astro:assets';
+import SmartImage from './SmartImage.astro';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  before: ImageMetadata | string;
+  after: ImageMetadata | string;
+  beforeLabel?: string;
+  afterLabel?: string;
+  alt: string;
+  mobilePages?: { before: ImageMetadata | string; after: ImageMetadata | string }[];
+}
+
+const { before, after, beforeLabel = 'Before', afterLabel = 'After', alt, mobilePages = [] } = Astro.props;
+
+const getFullSrc = async (src: ImageMetadata | string) =>
+  typeof src === 'string' ? src : (await getImage({ src, width: Math.min(src.width, 2400), format: 'webp', quality: 100 })).src;
+
+const beforeFullSrc = await getFullSrc(before);
+const afterFullSrc = await getFullSrc(after);
+
+const resolvedMobilePages = await Promise.all(
+  mobilePages.map(async (page) => ({
+    before: page.before,
+    after: page.after,
+    beforeFullSrc: await getFullSrc(page.before),
+    afterFullSrc: await getFullSrc(page.after),
+    aspectRatio: typeof page.after === 'string' ? '3 / 4' : `${page.after.width} / ${page.after.height}`,
+  }))
+);
+
+const hasMobilePages = resolvedMobilePages.length > 0;
+---
+
+<div class="not-prose relative left-1/2 right-1/2 -mx-[50vw] w-screen px-6 py-10 sm:px-8 sm:py-16">
+  <div class="compare-wrapper mx-auto max-w-6xl">
+    {
+      hasMobilePages && (
+        <div class="compare-mobile-pages sm:hidden">
+          {resolvedMobilePages.length > 1 && (
+            <div class="mb-3 flex gap-2">
+              {resolvedMobilePages.map((_, i) => (
+                <button type="button" class="compare-page-btn flex-1 rounded-full border border-border-strong px-3 py-2 text-sm text-fg-muted transition-colors" data-page={i}>
+                  View {i + 1}
+                </button>
+              ))}
+            </div>
+          )}
+          <div class="mb-3 flex gap-2">
+            <button type="button" class="compare-toggle-btn flex-1 rounded-full border border-border-strong px-4 py-2 text-sm text-fg-muted transition-colors" data-choice="before">
+              {beforeLabel}
+            </button>
+            <button type="button" class="compare-toggle-btn flex-1 rounded-full border border-border-strong px-4 py-2 text-sm text-fg-muted transition-colors" data-choice="after">
+              {afterLabel}
+            </button>
+          </div>
+          <div class="relative">
+            {resolvedMobilePages.map((page, i) => (
+              <div class="compare-page-slide relative w-full overflow-hidden" data-page={i} style={`aspect-ratio: ${page.aspectRatio};${i === 0 ? '' : ' display:none;'}`}>
+                <SmartImage src={page.after} alt={alt} width={900} class="pointer-events-none absolute inset-0 h-full w-full object-cover object-top" />
+                <div class="compare-page-before pointer-events-none absolute inset-0 h-full w-full overflow-hidden" style="clip-path: inset(0 100% 0 0)">
+                  <SmartImage src={page.before} alt={alt} width={900} class="h-full w-full object-cover object-top" />
+                </div>
+                <button
+                  type="button"
+                  class="absolute top-3 right-3 z-10 flex h-9 w-9 items-center justify-center rounded-full border border-fg/80 bg-bg/80 text-fg backdrop-blur"
+                  aria-label="View comparison fullscreen"
+                  data-lightbox-src={page.afterFullSrc}
+                  data-lightbox-alt={alt}
+                  data-lightbox-compare="true"
+                  data-lightbox-before-src={page.beforeFullSrc}
+                  data-lightbox-after-src={page.afterFullSrc}
+                  data-lightbox-before-label={beforeLabel}
+                  data-lightbox-after-label={afterLabel}
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3" />
+                  </svg>
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )
+    }
+
+    {
+      !hasMobilePages && (
+        <div class="mb-3 flex gap-2 sm:hidden">
+          <button type="button" class="compare-toggle-btn flex-1 rounded-full border border-border-strong px-4 py-2 text-sm text-fg-muted transition-colors" data-choice="before">
+            {beforeLabel}
+          </button>
+          <button type="button" class="compare-toggle-btn flex-1 rounded-full border border-border-strong px-4 py-2 text-sm text-fg-muted transition-colors" data-choice="after">
+            {afterLabel}
+          </button>
+        </div>
+      )
+    }
+
+    <div class={`compare-slider relative aspect-[4/3] w-full cursor-ew-resize overflow-hidden select-none sm:aspect-video ${hasMobilePages ? 'hidden sm:block' : ''}`}>
+      <SmartImage
+        src={after}
+        alt={alt}
+        width={2400}
+        class="pointer-events-none absolute inset-0 h-full w-full object-cover object-top"
+      />
+      <div class="compare-before pointer-events-none absolute inset-0 h-full w-full overflow-hidden" style="clip-path: inset(0 50% 0 0)">
+        <SmartImage src={before} alt={alt} width={2400} class="h-full w-full object-cover object-top" />
+      </div>
+      <div class="compare-handle pointer-events-none absolute top-0 bottom-0 hidden w-px bg-fg/80 sm:block" style="left: 50%">
+        <div class="absolute top-1/2 left-1/2 flex h-9 w-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-fg/80 bg-bg/80 text-fg">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M8 6 2 12l6 6M16 6l6 6-6 6" />
+          </svg>
+        </div>
+      </div>
+      <span class="pointer-events-none absolute bottom-4 left-4 hidden rounded-full bg-bg/70 px-3 py-1 text-xs text-fg backdrop-blur sm:block">
+        {beforeLabel}
+      </span>
+      <span class="pointer-events-none absolute right-4 bottom-4 hidden rounded-full bg-bg/70 px-3 py-1 text-xs text-fg backdrop-blur sm:block">
+        {afterLabel}
+      </span>
+      {
+        !hasMobilePages && (
+          <button
+            type="button"
+            class="absolute top-3 right-3 z-10 flex h-9 w-9 items-center justify-center rounded-full border border-fg/80 bg-bg/80 text-fg backdrop-blur sm:hidden"
+            aria-label="View comparison fullscreen"
+            data-lightbox-src={afterFullSrc}
+            data-lightbox-alt={alt}
+            data-lightbox-compare="true"
+            data-lightbox-before-src={beforeFullSrc}
+            data-lightbox-after-src={afterFullSrc}
+            data-lightbox-before-label={beforeLabel}
+            data-lightbox-after-label={afterLabel}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3" />
+            </svg>
+          </button>
+        )
+      }
+    </div>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.compare-wrapper').forEach((wrapper) => {
+    const mobilePagesRoot = wrapper.querySelector<HTMLElement>('.compare-mobile-pages');
+
+    // .compare-slider is always present in the DOM (just hidden on mobile via
+    // CSS when a mobile paged UI is also present), so its setup always runs.
+    const slider = wrapper.querySelector<HTMLElement>('.compare-slider');
+    const sliderBefore = slider?.querySelector<HTMLElement>('.compare-before');
+    const handle = slider?.querySelector<HTMLElement>('.compare-handle');
+    const setSplit = (pct: number) => {
+      if (!sliderBefore || !handle) return;
+      sliderBefore.style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
+      handle.style.left = `${pct}%`;
+    };
+
+    // Desktop: mouse-driven drag reveal.
+    if (slider && sliderBefore && handle) {
+      slider.addEventListener('mousemove', (e) => {
+        const rect = slider.getBoundingClientRect();
+        setSplit(Math.min(100, Math.max(0, ((e.clientX - rect.left) / rect.width) * 100)));
+      });
+      slider.addEventListener('mouseleave', () => setSplit(50));
+    }
+
+    if (mobilePagesRoot) {
+      // Mobile: paged view selector + before/after toggle, scoped to the
+      // mobile-pages root so its buttons never clash with the desktop slider.
+      const pageSlides = Array.from(mobilePagesRoot.querySelectorAll<HTMLElement>('.compare-page-slide'));
+      const pageBtns = Array.from(mobilePagesRoot.querySelectorAll<HTMLButtonElement>('.compare-page-btn'));
+      const toggleBtns = Array.from(mobilePagesRoot.querySelectorAll<HTMLButtonElement>('.compare-toggle-btn'));
+
+      let activePage = 0;
+      let activeChoice: 'before' | 'after' = 'after';
+
+      const applyChoice = () => {
+        const slide = pageSlides[activePage];
+        const before = slide?.querySelector<HTMLElement>('.compare-page-before');
+        if (before) before.style.clipPath = activeChoice === 'before' ? 'inset(0 0% 0 0)' : 'inset(0 100% 0 0)';
+      };
+
+      const setActivePage = (i: number) => {
+        activePage = i;
+        pageSlides.forEach((slide, idx) => {
+          slide.style.display = idx === i ? '' : 'none';
+        });
+        pageBtns.forEach((btn, idx) => {
+          const active = idx === i;
+          btn.classList.toggle('border-accent', active);
+          btn.classList.toggle('text-accent', active);
+          btn.classList.toggle('border-border-strong', !active);
+          btn.classList.toggle('text-fg-muted', !active);
+        });
+        applyChoice();
+      };
+
+      const setActiveChoice = (choice: 'before' | 'after') => {
+        activeChoice = choice;
+        toggleBtns.forEach((btn) => {
+          const active = btn.dataset.choice === choice;
+          btn.classList.toggle('border-accent', active);
+          btn.classList.toggle('text-accent', active);
+          btn.classList.toggle('border-border-strong', !active);
+          btn.classList.toggle('text-fg-muted', !active);
+        });
+        applyChoice();
+      };
+
+      pageBtns.forEach((btn, i) => btn.addEventListener('click', () => setActivePage(i)));
+      toggleBtns.forEach((btn) => {
+        btn.addEventListener('click', () => setActiveChoice(btn.dataset.choice === 'before' ? 'before' : 'after'));
+      });
+
+      setActivePage(0);
+      setActiveChoice('after');
+      return;
+    }
+
+    // Mobile fallback (no mobilePages provided): tap-to-toggle on the same
+    // .compare-slider used by desktop, since a 1px drag handle is hard to
+    // grab on touch.
+    const toggleBtns = Array.from(wrapper.querySelectorAll<HTMLButtonElement>('.compare-toggle-btn'));
+    if (!slider || !sliderBefore || !handle) return;
+
+    const setActiveButton = (choice: string) => {
+      toggleBtns.forEach((btn) => {
+        const active = btn.dataset.choice === choice;
+        btn.classList.toggle('border-accent', active);
+        btn.classList.toggle('text-accent', active);
+        btn.classList.toggle('border-border-strong', !active);
+        btn.classList.toggle('text-fg-muted', !active);
+      });
+    };
+
+    toggleBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const choice = btn.dataset.choice === 'before' ? 'before' : 'after';
+        setSplit(choice === 'before' ? 100 : 0);
+        setActiveButton(choice);
+      });
+    });
+
+    if (toggleBtns.length && window.matchMedia('(max-width: 639px)').matches) {
+      setSplit(0);
+      setActiveButton('after');
+    }
+  });
+</script>

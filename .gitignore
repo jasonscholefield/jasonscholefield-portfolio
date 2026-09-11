@@ -20,5 +20,16 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 
+# Windows-specific files
+Thumbs.db
+
 # jetbrains setting folder
 .idea/
+
+# editor
+.vscode/
+
+# Claude Code
+.claude/
+CLAUDE.md
+AGENTS.md

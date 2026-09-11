@@ -1,15 +1,214 @@
 ---
+import { Image } from 'astro:assets';
+import andrewImg from '../assets/testimonials/andrew.jpg';
+import christopheImg from '../assets/testimonials/christophe.jpg';
+import jonImg from '../assets/testimonials/jon.jpg';
+import ericImg from '../assets/testimonials/eric.jpg';
+import zacImg from '../assets/testimonials/zac.jpg';
+
+const testimonials = [
+  {
+    name: 'Andrew Presnell',
+    role: 'CRO Manager, Universal Technical Institute',
+    avatar: andrewImg,
+    quote: [
+      'Working with Jason has been one of the highlights of the past year.',
+      "Jason is incredibly talented from a design perspective—his work is consistently thoughtful, fresh, and grounded in a deep understanding of the user experience. I always look forward to brainstorming and workshopping ideas with him because he has a way of seeing opportunities and details that others might miss.",
+      "What I appreciate most, though, is how collaborative he is. We've built a relationship where we're comfortable challenging each other's thinking, and I genuinely believe our ideas end up stronger because of it. Jason welcomes feedback, gives it thoughtfully, and approaches every conversation with curiosity rather than ego.",
+      "Through our CRO and experimentation work, he's helped raise the level of our program by combining strong research instincts, strategic thinking, and excellent design execution. I was also pleasantly surprised to learn how capable he is on the development side, which allows him to contribute in ways that extend far beyond design alone.",
+      "Any team would be fortunate to have Jason. He's a talented designer, a thoughtful partner, and someone who consistently makes the people around him better.",
+    ],
+  },
+  {
+    name: 'Christophe Viau',
+    role: 'Senior Design Director, Medable',
+    avatar: christopheImg,
+    quote: [
+      'I had the pleasure of working with Jason at Medable for 7 months on complex product designs in healthcare. Throughout our collaboration, Jason demonstrated an expertise of the entire design process, from initial research to final implementation. He consistently delivered quality work with remarkable efficiency.',
+      'What set Jason apart is his communication skills. He brought a calm, steady presence to our team while working through complex clinical research workflows. His ability to communicate clearly contributed to smooth problem-solving throughout our projects.',
+      'Jason is thorough in his work, reliable, and a great collaborator. I strongly recommend him for any team tackling complex design challenges in a fast-paced startup environment.',
+    ],
+  },
+  {
+    name: 'Jon Lewis',
+    role: 'Chief Marketing Officer',
+    avatar: jonImg,
+    quote: [
+      "I've worked with Jason in a variety of capacities over the years. And at more than one company. He is absolutely brilliant at everything from strategy to implementation. He is thoughtful. Experienced. Kind. And professional. He brings both calm and confidence, and is not only the perfect candidate to fill leadership UX roles but he improves the culture from the moment he joins a team. He's a rock star without the baggage. What more could you ask for?",
+    ],
+  },
+  {
+    name: 'Eric Doolan',
+    role: 'VP of Digital Production, LaneTerralever',
+    avatar: ericImg,
+    quote: [
+      "It's rare to have the opportunity to work with a T-shaped individual like Jason Scholefield. His strong digital skill set and creative mind bring two very powerful components to LaneTerralever's digital production team. He can effectively collaborate with other disciplines within the agency, making him an invaluable resource in our client's success.",
+      'During his time spent at LaneTerralever, Jason quickly progressed from being a User Experience Architect, designing experiences using traditional methods of research, ideation, and documentation, into a more advanced role utilizing rapid prototyping methods and front-end development skills.',
+      "Jason has a passion for learning front-end frameworks, and his design skills have been integral in the creation of a Conversion Rate Optimization practice. Not only is he driven by creating engaging experiences, he is also passionate about driving tangible marketing results for our national and international client base.",
+      'Jason is exceptional to work with and he would be a valuable addition to any marketing team.',
+    ],
+  },
+  {
+    name: 'Zacry Fox',
+    role: 'Search Control',
+    avatar: zacImg,
+    quote: [
+      "I've had the chance to work with Jason and watch him grow at Search Control over the last two years. Jason has grown in his knowledge of not only web marketing, but how it specifically relates to web design and development. Jason has a keen sense for design, and is able to produce astounding work through Photoshop, and convert designs into creative WordPress environments. I would recommend Jason for any business that is looking for a strong design and development lead.",
+    ],
+  },
+];
 ---
 
 <section class="border-t border-border px-6 py-24 sm:px-8">
   <div class="mx-auto max-w-6xl">
-    <h2 class="text-sm text-fg-subtle">What my colleagues think</h2>
-    <blockquote class="mt-8 max-w-3xl text-2xl leading-snug text-fg sm:text-3xl">
-      &ldquo;It&rsquo;s rare to have the opportunity to work with a T-shaped individual like
-      Jason. His strong digital skill set and creative mind bring two very powerful components
-      to digital production teams. He can effectively collaborate with other disciplines within
-      the agency, making him an invaluable resource in our client&rsquo;s success.&rdquo;
-    </blockquote>
-    <p class="mt-6 text-sm text-fg-muted">&mdash; Eric Doolan, VP of Digital Production</p>
+    <div class="flex items-center justify-between">
+      <h2 class="text-xl font-medium tracking-tight text-fg-muted sm:text-2xl">What my colleagues think</h2>
+      <div class="flex items-center gap-2">
+        <button
+          type="button"
+          id="testimonial-prev"
+          aria-label="Previous testimonial"
+          class="flex h-9 w-9 items-center justify-center rounded-full border border-border-strong text-fg-muted transition-colors hover:border-accent hover:text-accent"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 6 9 12l6 6" />
+          </svg>
+        </button>
+        <button
+          type="button"
+          id="testimonial-next"
+          aria-label="Next testimonial"
+          class="flex h-9 w-9 items-center justify-center rounded-full border border-border-strong text-fg-muted transition-colors hover:border-accent hover:text-accent"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m9 6 6 6-6 6" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div id="testimonial-slider" class="testimonial-grid mt-8 max-w-3xl">
+      {
+        testimonials.map((t, i) => (
+          <div class="testimonial-slide" data-index={i} class:list={{ 'is-active': i === 0 }}>
+            <blockquote class="space-y-4 text-xl leading-snug text-fg sm:text-2xl">
+              {t.quote.map((para, pi) => (
+                <p>
+                  {pi === 0 && '“'}
+                  {para}
+                  {pi === t.quote.length - 1 && '”'}
+                </p>
+              ))}
+            </blockquote>
+            <div class="mt-6 flex items-center gap-3">
+              <Image src={t.avatar} alt={t.name} width={40} height={40} class="h-10 w-10 rounded-full object-cover" />
+              <p class="text-sm text-fg-muted">{t.name}, {t.role}</p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div class="flex gap-2">
+        {
+          testimonials.map((_, i) => (
+            <button
+              type="button"
+              class="testimonial-dot h-1.5 w-6 rounded-full bg-border-strong transition-colors"
+              data-index={i}
+              aria-label={`Go to testimonial ${i + 1}`}
+            />
+          ))
+        }
+      </div>
+      <a
+        href="https://www.linkedin.com/in/jasonscholefield/details/recommendations/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="mt-2 block text-left text-sm text-fg-muted transition-colors hover:text-fg sm:mt-0"
+      >
+        See all recommendations on LinkedIn <span aria-hidden="true">&#8599;</span>
+      </a>
+    </div>
   </div>
 </section>
+
+<style>
+  /* All slides stack in the same grid cell, so the container auto-sizes to
+     the tallest one and never changes height when the active slide swaps —
+     this is what stops the page from jumping/reflowing on rotation. */
+  .testimonial-grid {
+    display: grid;
+  }
+
+  .testimonial-slide {
+    grid-area: 1 / 1;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.2s ease,
+      visibility 0.2s ease;
+  }
+
+  .testimonial-slide.is-active {
+    opacity: 1;
+    visibility: visible;
+  }
+</style>
+
+<script>
+  const slider = document.getElementById('testimonial-slider');
+  const prevBtn = document.getElementById('testimonial-prev');
+  const nextBtn = document.getElementById('testimonial-next');
+
+  if (slider && prevBtn && nextBtn) {
+    const slides = Array.from(slider.querySelectorAll<HTMLElement>('.testimonial-slide'));
+    const dots = Array.from(document.querySelectorAll<HTMLButtonElement>('.testimonial-dot'));
+    let active = 0;
+    let timer: ReturnType<typeof setTimeout> | null = null;
+
+    // Give longer testimonials more time on screen (~200 words/min reading
+    // speed), with a floor so short ones don't flash by too quickly.
+    const durationFor = (slide: HTMLElement) => {
+      const wordCount = (slide.textContent ?? '').trim().split(/\s+/).length;
+      return Math.max(7000, (wordCount / 200) * 60000);
+    };
+
+    const show = (index: number) => {
+      active = (index + slides.length) % slides.length;
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('is-active', i === active);
+      });
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('bg-accent', i === active);
+        dot.classList.toggle('bg-border-strong', i !== active);
+      });
+    };
+
+    const scheduleNext = () => {
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => {
+        show(active + 1);
+        scheduleNext();
+      }, durationFor(slides[active]));
+    };
+
+    const goTo = (index: number) => {
+      show(index);
+      scheduleNext();
+    };
+
+    prevBtn.addEventListener('click', () => goTo(active - 1));
+    nextBtn.addEventListener('click', () => goTo(active + 1));
+    dots.forEach((dot, i) => dot.addEventListener('click', () => goTo(i)));
+
+    slider.addEventListener('mouseenter', () => {
+      if (timer) clearTimeout(timer);
+    });
+    slider.addEventListener('mouseleave', scheduleNext);
+
+    show(0);
+    scheduleNext();
+  }
+</script>

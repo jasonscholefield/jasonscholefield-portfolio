@@ -1,0 +1,117 @@
+---
+coverImage: "../../assets/work/breezing-pro.png"
+screenshots:
+  - "../../assets/work/breezing-pro/img1.png"
+  - "../../assets/work/breezing-pro/img2.png"
+client: "Breezing"
+title: "Designing a HIPAA-compliant companion app for time-constrained clinicians"
+summary: "A Bluetooth-connected companion app for a metabolic testing device, built for clinicians who need it invisible when it works and unmistakably clear when it doesn't."
+category: "Product Design"
+tags: ["HealthTech", "HIPAA", "Hardware Integration"]
+year: "2019"
+role: "Product Designer"
+responsibilities: "Hardware-integrated UX, compliance"
+stats:
+  - label: "Predicted REE Error"
+    value: "Up to 18% vs. generalized formulas"
+  - label: "Test Length"
+    value: "10-minute breath test"
+featured: false
+order: 7
+---
+import ProjectOverview from '../../components/content/ProjectOverview.astro';
+import Callout from '../../components/content/Callout.astro';
+import LearningsGrid from '../../components/content/LearningsGrid.astro';
+import ClickSlider from '../../components/ClickSlider.astro';
+import SmartImage from '../../components/SmartImage.astro';
+import overviewImg from '../../assets/work/breezing-pro/overview.png';
+import flow1 from '../../assets/work/breezing-pro/flow-1-welcome.png';
+import flow2 from '../../assets/work/breezing-pro/flow-2-patient-form.png';
+import flow3 from '../../assets/work/breezing-pro/flow-3-lifestyle.png';
+import flow4 from '../../assets/work/breezing-pro/flow-4-verify-patient.png';
+import flow5 from '../../assets/work/breezing-pro/flow-5-device-on.png';
+import flow6 from '../../assets/work/breezing-pro/flow-6-searching.png';
+import flow7 from '../../assets/work/breezing-pro/flow-7-scan-qr.png';
+import flow8 from '../../assets/work/breezing-pro/flow-8-insert-cartridge.png';
+import flow9 from '../../assets/work/breezing-pro/flow-9-calibration.png';
+import flow10 from '../../assets/work/breezing-pro/flow-10-prepare-patient.png';
+import flow11 from '../../assets/work/breezing-pro/flow-11-countdown.png';
+import results1 from '../../assets/work/breezing-pro/results-1-summary.png';
+import results2 from '../../assets/work/breezing-pro/results-2-trend.png';
+import results3 from '../../assets/work/breezing-pro/results-3-history.png';
+
+<ProjectOverview
+  goals={[
+    { title: 'Match device behavior exactly:', description: 'mirror the Breezing Pro hardware\'s measurement logic precisely, with no room for drift between what the device reads and what the app shows.' },
+    { title: 'Design for speed under pressure:', description: 'keep setup, testing, and review fast enough to survive real clinical time constraints.' },
+    { title: 'Build in compliance from the start:', description: 'meet HIPAA and FDA requirements on every screen that touches patient data, including a local-only storage option for partners who required it.' },
+    { title: 'Make failure states impossible to miss:', description: 'a hardware-connected app has to be invisible when it works and unmistakably clear the moment it doesn\'t.' },
+  ]}
+>
+  <p>Breezing is a metabolic testing device, developed out of Mayo Clinic-affiliated research, that measures a patient's Resting Energy Expenditure (REE) through a 10-minute breath test. Breezing Pro is its HIPAA-compliant companion app, connecting via Bluetooth to run tests and securely store clinical results. Clinicians previously relied on REE estimates from generalized formulas based on age, height, weight, and activity level, estimates that could miss a patient's actual measured REE by a wide margin.</p>
+</ProjectOverview>
+
+<div class="not-prose relative left-1/2 right-1/2 -mx-[50vw] w-screen px-6 py-10 sm:px-8 sm:py-16">
+  <div class="mx-auto max-w-6xl">
+    <SmartImage src={overviewImg} alt="Every screen in the Breezing Pro companion app, from patient intake through test results" width={2400} lightbox class="h-auto w-full" />
+  </div>
+</div>
+
+## The Problem
+
+- Clinicians relied on REE estimates from generalized formulas based on age, height, weight, and activity level
+- Those formulas could miss a patient's actual measured REE by a wide margin, in one real reading, by 18%
+- No individualized way to account for a patient's own metabolic variation
+- Clinical workflows left little room for setup, testing, and review to be anything but fast and reliable
+- HIPAA and FDA compliance requirements applied to every screen handling patient data
+
+<Callout eyebrow="Problem to solve" center>
+  <p>The app had to be invisible when it worked, and unmistakably clear the moment it didn't.</p>
+</Callout>
+
+## Strategy & Execution
+
+Constraints shaped every decision: HIPAA and FDA compliance, reliable BLE communication to the device, measurement logic that mirrored the hardware's behavior exactly, and local-only storage for the partners who required it. The guiding principle was clarity under pressure: streamlined flows, clear system feedback, minimal cognitive load, explicit state handling, and interfaces built for speed.
+
+Here's a full test, start to finish, from adding a new patient to the ten-minute countdown that measures them.
+
+<ClickSlider
+  images={[flow1, flow2, flow3, flow4, flow5, flow6, flow7, flow8, flow9, flow10, flow11]}
+  alt="A clinician running a complete Breezing Pro test, from adding a patient through the ten-minute breath test"
+  constrainHeight
+  captions={[
+    'Starting from an empty patient list: nothing to test until a patient is added.',
+    'Adding a new patient: name, sex, date of birth, height, weight, and lifestyle.',
+    'Lifestyle uses a simple, unambiguous set of options instead of a free-text field.',
+    'Before the test starts, the patient verifies their own information is correct.',
+    'Turning on the Breezing Pro device.',
+    'Pairing over Bluetooth.',
+    'Scanning the QR code on the sensor cartridge package.',
+    'Inserting the cartridge: once opened, the test has to start within 5 minutes.',
+    'Calibrating the device on a flat surface before it touches the patient.',
+    'Attaching the mask and securing the device to the patient.',
+    'A ten-minute countdown while the patient breathes normally, with Stop Test always visible.',
+  ]}
+/>
+
+## Results Clinicians Could Trust
+
+Results had to stand next to the old estimate and make the difference obvious, then fold into a history a clinician could track across visits.
+
+<ClickSlider
+  images={[results1, results2, results3]}
+  alt="A test result compared against the old generalized estimate, then tracked across a patient's visit history"
+  constrainHeight
+  captions={[
+    "Measured REE next to the same generalized estimate clinicians used before, here off by 18%.",
+    'Every measurement expands into its own trend, like this VO2 reading a clinician tapped into.',
+    "Test history across visits, with Measured REE and RQ side by side over time.",
+  ]}
+/>
+
+<LearningsGrid heading="Outcome" items={[
+  { icon: 'branch', title: 'Secure BLE Pairing', description: 'Reliable Bluetooth pairing and device communication that held up under real clinical conditions.' },
+  { icon: 'compass', title: 'Fast Test Initiation and Monitoring', description: 'A guided setup, scan to start, calibration, and a visible countdown, built for speed under pressure.' },
+  { icon: 'eye', title: 'Compliant Results, Viewing and Storage', description: 'Individualized REE and RQ results, plus a parallel local-only storage option for the partners who required it.' },
+  { icon: 'refresh', title: 'Over-the-Air Firmware Updates', description: 'The device could be updated in the field without clinicians needing to intervene.' },
+]} />

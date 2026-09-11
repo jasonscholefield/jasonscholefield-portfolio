@@ -6,10 +6,25 @@ const nav = [
 ];
 ---
 
-<header class="fixed top-0 left-0 right-0 z-50 border-b border-border/0">
-  <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-5 sm:px-8">
-    <a href="/" class="text-sm font-medium tracking-tight text-fg">
-      Jason Scholefield
+<header class="fixed top-0 left-0 right-0 z-50 border-b border-border bg-bg">
+  <div class="relative mx-auto flex max-w-6xl items-center justify-between px-6 py-5 sm:px-8">
+    <a href="/" aria-label="Jason Scholefield — home" class="text-fg transition-colors hover:text-accent">
+      <svg width="72" height="32" viewBox="0 0 1158 516" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M472.502 16.0024C472.502 16.0024 478.503 53.5024 553.502 50.0024C628.5 46.5024 651.502 35.0024 651.502 35.0024L297.502 499.502C312.503 464.002 303.503 457.002 178.003 382.002C103.201 340.837 16.0028 306.002 16.0028 306.002C16.0028 306.002 158.503 329.502 278.503 332.002C398.503 334.502 527.502 327.002 527.502 327.002"
+          stroke="currentColor"
+          stroke-width="32"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M482.503 385.002C482.503 385.002 463.503 402.502 466.503 412.502C469.503 422.502 488.003 428.502 505.003 427.502C522.003 426.502 546.003 420.502 550.503 410.502C555.003 400.502 509.003 360.002 514.503 346.502C520.003 333.002 540.003 321.502 555.503 317.002C571.003 312.502 606.503 312.502 606.503 312.502C606.503 312.502 576.003 352.502 580.003 357.002C584.003 361.502 633.003 345.502 646.503 344.502C660.003 343.502 977.003 344.502 1141.5 344.502"
+          stroke="currentColor"
+          stroke-width="32"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
     </a>
     <nav class="hidden items-center gap-8 sm:flex">
       {
@@ -31,11 +46,127 @@ const nav = [
         Resume
       </a>
     </nav>
-    <a
-      href="/#contact"
-      class="text-sm text-fg-muted transition-colors hover:text-fg sm:hidden"
+
+    <button
+      type="button"
+      id="mobile-nav-toggle"
+      class="hamburger sm:hidden"
+      aria-expanded="false"
+      aria-controls="mobile-nav"
+      aria-label="Open menu"
     >
-      Menu
-    </a>
+      <span class="hamburger-bar" aria-hidden="true"></span>
+      <span class="hamburger-bar" aria-hidden="true"></span>
+      <span class="hamburger-bar" aria-hidden="true"></span>
+    </button>
   </div>
+
+  <nav id="mobile-nav" class="mobile-nav border-b border-border bg-bg sm:hidden">
+    <div class="flex flex-col gap-1 px-6 py-4">
+      {
+        nav.map((item) => (
+          <a href={item.href} class="rounded-lg px-2 py-3 text-base text-fg-muted transition-colors hover:bg-bg-elevated hover:text-fg">
+            {item.label}
+          </a>
+        ))
+      }
+      <a
+        href="https://drive.google.com/file/d/1RVYE_spZ6m0UOX3GlUgR9lWlevMnIrPH/view?usp=sharing"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="mt-2 rounded-lg border border-border-strong px-2 py-3 text-center text-base text-fg transition-colors hover:border-accent hover:text-accent"
+      >
+        Resume
+      </a>
+    </div>
+  </nav>
 </header>
+
+<style>
+  .hamburger {
+    position: relative;
+    width: 22px;
+    height: 16px;
+    cursor: pointer;
+  }
+
+  .hamburger-bar {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    border-radius: 1px;
+    background: currentColor;
+    transition:
+      transform 0.25s ease,
+      opacity 0.2s ease,
+      top 0.25s ease;
+  }
+
+  .hamburger-bar:nth-child(1) {
+    top: 0;
+  }
+  .hamburger-bar:nth-child(2) {
+    top: 7px;
+  }
+  .hamburger-bar:nth-child(3) {
+    top: 14px;
+  }
+
+  .mobile-nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease,
+      visibility 0.2s ease;
+  }
+</style>
+
+<script>
+  const toggle = document.getElementById('mobile-nav-toggle');
+  const mobileNav = document.getElementById('mobile-nav');
+  const bars = toggle ? Array.from(toggle.querySelectorAll<HTMLElement>('.hamburger-bar')) : [];
+
+  if (toggle && mobileNav) {
+    const setOpen = (open: boolean) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+
+      if (bars[0]) {
+        bars[0].style.top = open ? '7px' : '0';
+        bars[0].style.transform = open ? 'rotate(45deg)' : 'rotate(0deg)';
+      }
+      if (bars[1]) {
+        bars[1].style.opacity = open ? '0' : '1';
+      }
+      if (bars[2]) {
+        bars[2].style.top = open ? '7px' : '14px';
+        bars[2].style.transform = open ? 'rotate(-45deg)' : 'rotate(0deg)';
+      }
+
+      mobileNav.style.opacity = open ? '1' : '0';
+      mobileNav.style.visibility = open ? 'visible' : 'hidden';
+      mobileNav.style.transform = open ? 'translateY(0)' : 'translateY(-8px)';
+
+      document.body.style.overflow = open ? 'hidden' : '';
+    };
+
+    toggle.addEventListener('click', () => {
+      setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+    });
+
+    mobileNav.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => setOpen(false));
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') setOpen(false);
+    });
+  }
+</script>

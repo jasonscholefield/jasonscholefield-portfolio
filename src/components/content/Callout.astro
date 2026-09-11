@@ -1,0 +1,36 @@
+---
+interface Props {
+  heading?: string;
+  quote?: string;
+  attribution?: string;
+  eyebrow?: string;
+  center?: boolean;
+}
+
+const { heading, quote, attribution, eyebrow, center = false } = Astro.props;
+---
+
+<div class="not-prose relative left-1/2 right-1/2 -mx-[50vw] w-screen bg-bg-elevated my-10 px-6 py-10 sm:my-[72px] sm:px-8 sm:py-[72px]">
+  <div class={`mx-auto max-w-3xl ${center ? 'text-center' : ''}`}>
+    {eyebrow && <p class="mb-3 text-xs font-light tracking-[0.2em] text-fg-subtle uppercase">{eyebrow}</p>}
+    {
+      quote ? (
+        <>
+          <p class="text-2xl leading-snug font-medium text-fg">&ldquo;{quote}&rdquo;</p>
+          {attribution && <p class="mt-4 text-sm text-fg-subtle">&mdash; {attribution}</p>}
+        </>
+      ) : heading ? (
+        <>
+          <h3 class="text-2xl font-medium tracking-tight text-fg">{heading}</h3>
+          <div class="mt-4 space-y-4 text-base leading-relaxed text-fg-muted">
+            <slot />
+          </div>
+        </>
+      ) : (
+        <div class="space-y-4 text-2xl leading-snug font-medium text-fg">
+          <slot />
+        </div>
+      )
+    }
+  </div>
+</div>

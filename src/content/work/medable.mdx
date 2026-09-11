@@ -1,0 +1,158 @@
+---
+coverImage: "../../assets/work/medable.png"
+screenshots:
+  - "../../assets/work/medable/img1.png"
+  - "../../assets/work/medable/img2.png"
+client: "Medable"
+title: "Reducing operational risk by redesigning ownership in clinical trial workflows"
+summary: "Shifting data-change ownership to the roles closest to the work, without sacrificing the compliance a regulated clinical trial platform depends on."
+category: "Product Design"
+tags: ["Enterprise", "Healthcare", "Workflow Design", "Agentic AI"]
+year: "2025"
+role: "Senior Product Designer"
+responsibilities: "Journey mapping, workflow redesign, agentic AI platform design"
+featured: true
+order: 3
+---
+import ProjectOverview from '../../components/content/ProjectOverview.astro';
+import ContentSplit from '../../components/content/ContentSplit.astro';
+import Callout from '../../components/content/Callout.astro';
+import LearningsGrid from '../../components/content/LearningsGrid.astro';
+import ClickSlider from '../../components/ClickSlider.astro';
+import SmartImage from '../../components/SmartImage.astro';
+import journeyMapImg from '../../assets/work/medable/02-journey-map.png';
+import wireframeImg from '../../assets/work/medable/03-wireframe.png';
+import c1 from '../../assets/work/medable/c1.png';
+import c2 from '../../assets/work/medable/c2.png';
+import c3 from '../../assets/work/medable/c3.png';
+import c4 from '../../assets/work/medable/c4.png';
+import c5 from '../../assets/work/medable/c5.png';
+import c6 from '../../assets/work/medable/c6.png';
+import c7 from '../../assets/work/medable/c7.png';
+import c8 from '../../assets/work/medable/c8.png';
+import c9 from '../../assets/work/medable/c9.png';
+import c10 from '../../assets/work/medable/c10.png';
+import c11 from '../../assets/work/medable/c11.png';
+import cc1 from '../../assets/work/medable/cc1.png';
+import cc2 from '../../assets/work/medable/cc2.png';
+import cc3 from '../../assets/work/medable/cc3.png';
+import cc4 from '../../assets/work/medable/cc4.png';
+import cc5 from '../../assets/work/medable/cc5.png';
+import cc6 from '../../assets/work/medable/cc6.png';
+import cc7 from '../../assets/work/medable/cc7.png';
+import cc8 from '../../assets/work/medable/cc8.png';
+import cc9 from '../../assets/work/medable/cc9.png';
+import cc10 from '../../assets/work/medable/cc10.png';
+import monitorImg from '../../assets/work/medable/img2.png';
+import worldwideMapImg from '../../assets/work/medable/worldwide-map.webp';
+
+<ProjectOverview
+  goals={[
+    { title: 'Close the ownership gap:', description: 'give CRAs and PIs direct control over routine data changes instead of routing every one through support.' },
+    { title: 'Preserve compliance:', description: 'redesign the workflow without weakening the audit trail a regulated clinical trial platform depends on.' },
+    { title: 'Reduce operational cost and risk:', description: 'cut out the slow, error-prone process of support manually updating database records.' },
+    { title: 'Strengthen accountability:', description: 'make justification and sign-off an explicit, traceable step between CRA and PI.' },
+  ]}
+>
+  <p>Medable's decentralized clinical trial platform serves CRAs, Principal Investigators, patients, and sponsors in a highly regulated environment. I led an end-to-end journey mapping effort to understand why routine data corrections were slow and costly, then redesigned the workflow to shift ownership to the roles closest to the work, without sacrificing the compliance the platform depends on. CRAs and PIs use Medable on desktop and tablet only, so this work (and everything below) was scoped for those two, with no mobile experience to design.</p>
+</ProjectOverview>
+
+<ContentSplit heading="The Problem" image={journeyMapImg} imageAlt="An end-to-end journey map of the clinical trial data change process, surfacing ownership gaps and manual handoffs" imagePosition="right" notes={[
+  { label: 'What CRAs dealt with', text: 'Every routine data correction meant a support ticket and a manual database update, even for straightforward changes.' },
+  { label: 'What the workflow needed', text: 'A way for CRAs and PIs to make and approve changes directly, without losing the audit trail compliance requires.' },
+]}>
+  <p>Medable's decentralized clinical trial platform serves CRAs, Principal Investigators, patients, and sponsors in a highly regulated environment. An end-to-end journey map surfaced the real issue: ownership gaps between roles, manual handoffs creating delays and risk, and a support team functioning as a permanent workaround for product limitations.</p>
+  <p>The existing workflow was operationally expensive. CRAs submitted change requests to support, developers manually updated database records, turnaround was slow and error-prone, and Medable absorbed unnecessary cost for routine work.</p>
+</ContentSplit>
+
+<Callout eyebrow="Problem to solve" center>
+  <p>Medable operates in a highly regulated environment, so fixing this required precision and restraint, not a sweeping redesign.</p>
+</Callout>
+
+## Strategy & Execution
+
+The redesign shifted ownership to CRAs and PIs while preserving compliance. The new data change workflow:
+
+1. CRA selects the data point requiring change
+2. CRA selects a reason and digitally signs the request
+3. PI reviews, approves or declines, and signs off
+
+<ContentSplit heading="Wireframing the New Ownership Model" image={wireframeImg} imageAlt="Wireframes for the new data change workflow, mapping point selection, reason and justification, and PI review and sign-off" imagePosition="left">
+  <p>Before touching the live product, I wireframed the full data change flow: point selection, reason and justification, and PI review and sign-off, mapping how ownership moves from CRA to PI at each step.</p>
+</ContentSplit>
+
+## Ownership Where the Work Happens
+
+CRAs now select and justify a change directly, and PIs review, approve, and digitally sign off, all without leaving the platform or opening a support ticket.
+
+To see it in practice, imagine a CRA needs to correct a participant's answer from an earlier visit. Here's what that request looks like, from finding the study to sending it off for approval.
+
+<ClickSlider
+  images={[c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11]}
+  alt="A CRA correcting a participant's answer from an earlier visit"
+  captions={[
+    'Finding the right study.',
+    'Locating the participant, S001-012.',
+    'Opening the visit where the answer needs to change, Visit 1.',
+    'Finding the response in question and selecting Edit.',
+    'Reviewing the answer as it was originally recorded.',
+    'Selecting the correct answer.',
+    'Confirming the change.',
+    'Comparing the change side by side, before and after.',
+    'Explaining the reason for the change.',
+    'Signing off on the request to send it for approval.',
+    "The request is submitted and now awaiting the PI's approval.",
+  ]}
+/>
+
+## The Agentic Dashboard
+
+Beyond this workflow redesign, I worked with Medable's design team to build out every screen in the platform's broader agentic AI experience. Much of it came together during an on-site workshop in Chicago, where most of the company spent a week designing and building the experience on the fly to pitch a major sponsor in the industry.
+
+The platform itself is a model-agnostic system built for GxP-regulated environments, connecting to 15+ clinical and enterprise tools like Veeva, Oracle, Medidata, and Snowflake through more than 30 validated connectors. Every recommendation an agent makes stays fully observable, explainable, and auditable, which matters as much as the recommendation itself in a regulated trial.
+
+<h3 class="not-prose text-2xl font-medium tracking-tight text-fg">Agent Studio</h3>
+
+Agent Studio is where these agents get built and managed: a library of AI agents ranging from published, in-production tools to drafts still being tested, each one scoped to a specific job in the clinical trial lifecycle.
+
+<ClickSlider
+  images={[cc1, cc2, cc3, cc4, cc5, cc6, cc7, cc8, cc9, cc10]}
+  alt="Building and publishing an AI agent in Agent Studio"
+  captions={[
+    'Opening Agent Studio and selecting Create Agent.',
+    'Agent Studio offers a few starting points, or a blank prompt to build from scratch.',
+    'Prompting the agent into existence: "Build me a chat agent named Harmony AI that connects GitLab and Confluence."',
+    'Building the AI agent node.',
+    'Connecting the triggers that kick off the workflow.',
+    'Connecting the apps the agent will work with.',
+    'The agent is built, with triggers, AI logic, and connected apps mapped out automatically.',
+    'The workflow can be edited directly from here: connect another app, redirect the flow, or add a sub-agent.',
+    'Publishing makes the agent available to use right away.',
+    'The agent is live, with a direct link ready to launch it.',
+  ]}
+/>
+
+<ContentSplit heading="Monitor: Where Agents Surface What Matters" image={monitorImg} imageAlt="The Monitor dashboard, showing a daily AI summary, an AI recommendation to resupply drug inventory, and a list of agent actions across study sites" imagePosition="left">
+  <p>Monitor is where those agents surface what actually needs attention: real-time site monitoring across CTMS, EDC, and RBQM data, summarized into a plain-language daily update, risk flags, and recommended next steps, like catching a drug supply shortage before it becomes a problem.</p>
+</ContentSplit>
+
+<div class="not-prose relative left-1/2 right-1/2 -mx-[50vw] w-screen px-6 py-10 sm:px-8 sm:py-16">
+  <div class="mx-auto max-w-6xl">
+    <SmartImage src="/work/medable/ai-translation.gif" alt="The Translation Workbench automatically translating clinical trial content across locales" class="h-auto w-full rounded-xl border border-border" />
+  </div>
+</div>
+
+<ContentSplit heading="Built for Global Trials" image={worldwideMapImg} imageAlt="A world map showing Medable's global reach across clinical trial sites" imagePosition="right">
+  <p>The Translation Workbench automates that same agentic approach for clinical content localization, with AI-driven translation across 80+ countries and 120+ locales and quality control built into the review step, not bolted on after. That scale is part of what lets studies run across 65+ countries with 99% on-time delivery.</p>
+</ContentSplit>
+
+<Callout eyebrow="The Chicago workshop" center>
+  <p>That week of on-the-fly design work paid off: Medable won the sponsor's business.</p>
+</Callout>
+
+<LearningsGrid heading="Outcome" items={[
+  { icon: 'layers', title: 'Eliminated Support as a Workaround', description: "Routine data changes no longer route through Medable's support team, removing an entire manual handoff from the workflow." },
+  { icon: 'scale', title: 'Faster, Lower-Risk Turnaround', description: 'Correction turnaround time dropped and operational overhead fell along with it.' },
+  { icon: 'branch', title: 'Stronger CRA-PI Accountability', description: 'Direct selection, justification, and sign-off strengthened accountability between the two roles doing the work.' },
+  { icon: 'eye', title: 'Reinforced Auditability and Trust', description: 'The new digital sign-off trail reinforced auditability and trust in the platform.' },
+]} />

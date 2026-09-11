@@ -1,40 +1,137 @@
 ---
-const lines = [
-  'Who I am',
-  'What I do',
-  'What I care about',
-  'Where I&rsquo;ve been',
-  'What&rsquo;s next',
+const words = [
+  {
+    key: 'experience',
+    text: 'experience',
+    color: 'var(--color-hero-1)',
+    icon: 'bolt',
+    caption:
+      "15+ years across product design, UX research, and frontend development. I've built enterprise platforms and shipped apps solo.",
+  },
+  {
+    key: 'range',
+    text: 'range',
+    color: 'var(--color-hero-2)',
+    icon: 'cube',
+    caption:
+      'Product design, design systems, UX research, and frontend development in React, TypeScript, and Vue.',
+  },
+  {
+    key: 'industries',
+    text: 'complex, regulated industries',
+    color: 'var(--color-hero-3)',
+    icon: 'shield',
+    caption:
+      'Healthcare, clinical trials, civic tech, and enterprise SaaS. These are industries where clarity and compliance both matter.',
+  },
 ];
+
+const icons: Record<string, string> = {
+  bolt: 'M11 2 3 13h6l-1 9 9-13h-6l1-7Z',
+  cube: 'M12 2 3 7l9 5 9-5-9-5ZM3 7v10l9 5 9-5V7M12 12v10',
+  shield: 'M12 2l8 3.5v5C20 16 16.5 20 12 22 7.5 20 4 16 4 10.5v-5L12 2Z',
+};
 ---
 
-<section class="flex min-h-screen flex-col justify-between px-6 pt-32 pb-10 sm:px-8">
-  <div>
+<section class="px-6 pt-36 pb-20 sm:px-8 sm:pt-44 sm:pb-24">
+  <div class="mx-auto max-w-6xl">
     <p class="text-sm text-fg-subtle">Senior Product Designer &middot; Based in the U.S.</p>
 
-    <ul class="mt-8 sm:mt-12">
-      {
-        lines.map((line, i) => (
-          <li
-            class="border-t border-border py-3 text-[13vw] leading-[0.95] font-medium tracking-tight text-fg-subtle transition-colors last:border-b sm:py-4 sm:text-[6.5vw]"
-            style={`opacity: ${1 - i * 0.12}`}
-            set:html={line}
-          />
-        ))
-      }
-    </ul>
-  </div>
+    <h1 class="mt-6 text-6xl leading-[0.95] font-bold tracking-tight text-fg sm:mt-8 sm:text-7xl lg:text-[120px]">
+      Jason<br />Scholefield
+    </h1>
 
-  <div class="mt-16 flex flex-col gap-10 sm:mt-24 sm:flex-row sm:items-end sm:justify-between">
-    <p class="max-w-xl text-2xl leading-snug text-fg sm:text-3xl">
-      I&rsquo;m Jason &mdash; a senior product designer turning complex workflows into simple, high impact experiences.
-    </p>
+    <div class="hero-block mt-10 sm:mt-16">
+      <p class="hero-line max-w-4xl text-4xl leading-[1.15] font-medium text-fg sm:text-5xl">
+        <span class="hero-plain">I&rsquo;m a senior product designer with the{' '}</span>{words.slice(0, 2).map((w, i) => (
+          <>
+            <span class="hw" data-key={w.key} style={`--word-color: ${w.color}`}>{w.text}</span><span class="hero-plain">{i === 0 ? ' and ' : ' to bring clarity to '}</span>
+          </>
+        ))}<span class="hw" data-key={words[2].key} style={`--word-color: ${words[2].color}`}>{words[2].text}</span><span class="hero-plain">.</span>
+      </p>
 
-    <a href="#work" class="group inline-flex items-center gap-3 text-sm text-fg-muted transition-colors hover:text-accent">
-      <span class="flex h-10 w-10 items-center justify-center rounded-full border border-border-strong transition-colors group-hover:border-accent">
-        <span aria-hidden="true">&darr;</span>
-      </span>
-      Scroll to see work
-    </a>
+      <div class="hero-captions mt-6 grid max-w-4xl sm:mt-8">
+        {
+          words.map((w) => (
+            <p class="hero-caption flex items-start gap-2 text-sm italic" data-for={w.key} style={`--word-color: ${w.color}`}>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+                class="mt-0.5 shrink-0"
+              >
+                <path d={icons[w.icon]} />
+              </svg>
+              <span class="leading-relaxed">{w.caption}</span>
+            </p>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="mt-14 flex justify-end sm:mt-16">
+      <a href="#work" class="group inline-flex items-center gap-3 text-sm text-fg-muted transition-colors hover:text-accent">
+        <span class="flex h-10 w-10 items-center justify-center rounded-full border border-border-strong transition-colors group-hover:border-accent">
+          <span aria-hidden="true">&darr;</span>
+        </span>
+        Scroll to see work
+      </a>
+    </div>
   </div>
 </section>
+
+<style>
+  .hw {
+    color: var(--word-color);
+    font-style: italic;
+    font-weight: 600;
+    cursor: default;
+  }
+
+  .hero-captions {
+    display: grid;
+  }
+
+  .hero-caption {
+    grid-area: 1 / 1;
+    color: var(--word-color);
+    opacity: 0;
+    visibility: hidden;
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.hero-block').forEach((block) => {
+    const words = Array.from(block.querySelectorAll<HTMLElement>('.hw'));
+    const plains = Array.from(block.querySelectorAll<HTMLElement>('.hero-plain'));
+    const captions = Array.from(block.querySelectorAll<HTMLElement>('.hero-caption'));
+    const dimColor = getComputedStyle(document.documentElement).getPropertyValue('--color-fg-subtle').trim();
+
+    const setActive = (key: string | null) => {
+      for (const w of words) {
+        w.style.color = key && w.dataset.key !== key ? dimColor : '';
+      }
+      for (const p of plains) {
+        p.style.color = key ? dimColor : '';
+      }
+      for (const c of captions) {
+        const active = key !== null && c.dataset.for === key;
+        c.style.opacity = active ? '1' : '0';
+        c.style.visibility = active ? 'visible' : 'hidden';
+      }
+    };
+
+    words.forEach((word) => {
+      word.style.transition = 'color 0.15s ease';
+      word.addEventListener('mouseenter', () => setActive(word.dataset.key ?? null));
+      word.addEventListener('mouseleave', () => setActive(null));
+    });
+    plains.forEach((p) => (p.style.transition = 'color 0.15s ease'));
+    captions.forEach((c) => (c.style.transition = 'opacity 0.15s ease, visibility 0.15s ease'));
+  });
+</script>

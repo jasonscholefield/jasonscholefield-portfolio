@@ -1,0 +1,99 @@
+---
+coverImage: "../../assets/work/drips.png"
+screenshots:
+  - "../../assets/work/drips/img1.png"
+  - "../../assets/work/drips/img2.png"
+client: "Drips"
+title: "Reducing customer success overhead by designing a self-serve analytics dashboard"
+summary: "Moving clients off manually-emailed screenshots and onto a self-serve dashboard built around the questions they were actually asking."
+category: "Product Design"
+tags: ["SaaS", "Dashboard", "B2B"]
+year: "2025"
+role: "Senior Product Designer"
+responsibilities: "0 to 1 design, foundational usability"
+stats:
+  - label: "Before"
+    value: "Manual, CSM-emailed reports"
+  - label: "After"
+    value: "Self-serve, on-demand dashboard"
+featured: true
+order: 6
+---
+import ProjectOverview from '../../components/content/ProjectOverview.astro';
+import ContentSplit from '../../components/content/ContentSplit.astro';
+import Callout from '../../components/content/Callout.astro';
+import LearningsGrid from '../../components/content/LearningsGrid.astro';
+import ClickSlider from '../../components/ClickSlider.astro';
+import research1 from '../../assets/work/drips/research1.png';
+import research2 from '../../assets/work/drips/research2.png';
+import slide1 from '../../assets/work/drips/slide1.png';
+import slide2 from '../../assets/work/drips/slide2.png';
+import slide3 from '../../assets/work/drips/slide3.png';
+import slide4 from '../../assets/work/drips/slide4.png';
+import slide5 from '../../assets/work/drips/slide5.png';
+import slide6 from '../../assets/work/drips/slide6.png';
+import slide7 from '../../assets/work/drips/slide7.png';
+import slide8 from '../../assets/work/drips/slide8.png';
+import slide9 from '../../assets/work/drips/slide9.png';
+import slide10 from '../../assets/work/drips/slide10.png';
+
+<ProjectOverview
+  goals={[
+    { title: 'Make important metrics immediately visible:', description: "surface the numbers clients actually asked Customer Success for, right when they log in." },
+    { title: 'Reduce cognitive load:', description: 'use hierarchy and flow so a client can find an answer without being trained on the tool first.' },
+    { title: 'Clearly communicate filtered data views:', description: "make it obvious what date range, project, or campaign a number is describing." },
+    { title: 'Design for iteration, not completeness:', description: 'ship a focused v1 that solved the real problem instead of waiting on an exhaustive platform.' },
+  ]}
+>
+  <p>Drips provides conversational SMS marketing solutions for healthcare and enterprise clients. Before this project, clients requested statistics directly from Customer Success Managers, who manually pulled data from legacy systems into spreadsheets and emailed screenshots weekly. It created unnecessary overhead, prevented clients from exploring their own data, and scaled poorly as the client base grew.</p>
+</ProjectOverview>
+
+## The Problem
+
+- Intake handled entirely through manual CSM requests
+- Data pulled from legacy systems into spreadsheets by hand
+- Screenshots emailed on a weekly cadence, not on demand
+- No way for clients to explore their own data or ask a follow-up question
+- Growing client base made the manual process increasingly unsustainable
+
+<Callout eyebrow="Problem to solve" center>
+  <p>The dashboard was never about conversion or growth actions. It was about clarity, trust, and self-service.</p>
+</Callout>
+
+## Strategy & Execution
+
+Research centered on why data was needed, what decisions clients made with it, who interpreted it, and where the friction actually lived. Rather than designing an exhaustive platform, the approach focused on foundational usability: make important metrics immediately visible, reduce cognitive load through hierarchy and flow, clearly communicate filtered data views, and design for iteration rather than completeness.
+
+<ContentSplit heading="Where the Redesign Started" image={research1} imageAlt="The existing Drips dashboard prior to the redesign, featuring donut gauges, an always-open filter panel, and a choropleth map" imagePosition="right">
+  <p>Clients were already looking at a version of this dashboard, just a much denser one: donut-gauge metrics, a filter panel pinned open at all times, and a choropleth map all competing for attention at once. That density, more than any missing feature, was what the redesign set out to fix.</p>
+</ContentSplit>
+
+<ContentSplit heading="Calibrating Against the Field" image={research2} imageAlt="A moodboard of comparable SaaS analytics dashboards used as reference points during the redesign" imagePosition="left">
+  <p>To figure out where to take it instead, I benchmarked against a range of comparable SaaS dashboards to calibrate density, hierarchy, and visual language, thinking through what a client skimming for one number would expect to see first.</p>
+</ContentSplit>
+
+Self-service meant more than just displaying numbers. Every metric needed context on demand, and every view needed to make it obvious what data it was actually showing. Here's a client exploring their own data end to end, from a quick tooltip to a fully filtered, multi-project view.
+
+<ClickSlider
+  images={[slide1, slide2, slide3, slide4, slide5, slide6, slide7, slide8, slide9, slide10]}
+  alt="A client exploring the Drips dashboard, from a quick metric tooltip to a fully filtered, multi-project view"
+  captions={[
+    'Starting from the default view: last year of data across every metric.',
+    'Hovering a metric name explains exactly what it measures, no training required.',
+    'Hovering a point on the trend chart surfaces the exact value behind it.',
+    'Switching the time range is a single click away, no need to open anything else.',
+    'Selecting "1 Month" re-renders the chart at daily granularity and confirms the change.',
+    'For more control, the full Filters panel adds project, campaign, and record-grouping options.',
+    'Picking a custom date range from a calendar instead of a preset window.',
+    'Selecting multiple specific projects to narrow the view down further.',
+    'All four filters set and ready to apply: a custom range, four projects, campaign, and grouping.',
+    'The dashboard confirms exactly what it\'s now showing: four projects, one month.',
+  ]}
+/>
+
+<LearningsGrid heading="Outcome" items={[
+  { icon: 'eye', title: 'On-Demand Data Access', description: 'Clients could answer their own questions the moment they had them, instead of waiting on a weekly email.' },
+  { icon: 'refresh', title: 'Reduced CS Reliance', description: 'Routine reporting requests to Customer Success Managers dropped as clients explored the dashboard themselves.' },
+  { icon: 'scale', title: 'Improved Trust and Transparency', description: 'Clear filter states and always-visible context built trust in the metrics clients were now reading unassisted.' },
+  { icon: 'branch', title: 'A Scalable Foundation', description: 'A focused v1 shipped faster than an exhaustive platform would have, and gave future analytics features a foundation to build on.' },
+]} />

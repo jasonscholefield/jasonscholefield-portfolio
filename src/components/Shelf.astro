@@ -1,0 +1,149 @@
+---
+import { Image } from 'astro:assets';
+import PlaceholderImage from './PlaceholderImage.astro';
+import solvingImg from '../assets/books/solving-product-design-exercises.jpg';
+import uxTeamImg from '../assets/books/ux-team-of-one.jpg';
+import momTestImg from '../assets/books/the-mom-test.jpg';
+import evilByDesignImg from '../assets/books/evil-by-design.jpg';
+import inspiredImg from '../assets/books/inspired.jpg';
+import designingProductsImg from '../assets/books/designing-products-people-love.jpg';
+import uxForBeginnersImg from '../assets/books/ux-for-beginners.jpg';
+import greenlightsImg from '../assets/books/greenlights.jpg';
+import thinkLikeAMonkImg from '../assets/books/think-like-a-monk.jpg';
+import pressResetImg from '../assets/books/press-reset.jpg';
+import bloodSweatPixelsImg from '../assets/books/blood-sweat-and-pixels.jpg';
+import makingOfAManagerImg from '../assets/books/making-of-a-manager.jpg';
+import dontMakeMeThinkImg from '../assets/books/dont-make-me-think.jpg';
+import kitchenConfidentialImg from '../assets/books/kitchen-confidential.jpg';
+import atomicDesignImg from '../assets/books/atomic-design.jpg';
+import designOfEverydayThingsImg from '../assets/books/design-of-everyday-things.jpg';
+import continuousDiscoveryImg from '../assets/books/continuous-discovery-habits.jpg';
+import gamersBrainImg from '../assets/books/the-gamers-brain.jpg';
+import creativeGeneImg from '../assets/books/the-creative-gene.jpg';
+import outliersImg from '../assets/books/outliers.jpg';
+import thinkingFastSlowImg from '../assets/books/thinking-fast-and-slow.jpg';
+import radicalCandorImg from '../assets/books/radical-candor.jpg';
+import littleBookOfDataImg from '../assets/books/little-book-of-data.jpg';
+import makingWebsitesWinImg from '../assets/books/making-websites-win.jpg';
+import launchItImg from '../assets/books/launch-it.jpg';
+
+const books = [
+  { title: 'Solving Product Design Exercises', author: 'Artiom Dashinsky', cover: solvingImg },
+  { title: 'The User Experience Team of One', author: 'Leah Buley', cover: uxTeamImg },
+  { title: 'The Mom Test', author: 'Rob Fitzpatrick', cover: momTestImg },
+  { title: 'Evil by Design', author: 'Chris Nodder', cover: evilByDesignImg },
+  { title: 'Inspired', author: 'Marty Cagan', cover: inspiredImg },
+  { title: 'Designing Products People Love', author: 'Scott Hurff', cover: designingProductsImg },
+  { title: 'UX for Beginners', author: 'Joel Marsh', cover: uxForBeginnersImg },
+  { title: 'Greenlights', author: 'Matthew McConaughey', cover: greenlightsImg },
+  { title: 'Think Like a Monk', author: 'Jay Shetty', cover: thinkLikeAMonkImg },
+  { title: 'Press Reset', author: 'Jason Schreier', cover: pressResetImg },
+  { title: 'Blood, Sweat, and Pixels', author: 'Jason Schreier', cover: bloodSweatPixelsImg },
+  { title: 'The Making of a Manager', author: 'Julie Zhuo', cover: makingOfAManagerImg },
+  { title: "Don't Make Me Think, Revisited", author: 'Steve Krug', cover: dontMakeMeThinkImg },
+  { title: 'Kitchen Confidential', author: 'Anthony Bourdain', cover: kitchenConfidentialImg },
+  { title: 'Atomic Design', author: 'Brad Frost', cover: atomicDesignImg },
+  { title: 'The Design of Everyday Things', author: 'Don Norman', cover: designOfEverydayThingsImg },
+  { title: 'The Little Book of Data', author: 'Justin Evans', cover: littleBookOfDataImg },
+  { title: 'Making Websites Win', author: 'Karl Blanks', cover: makingWebsitesWinImg },
+  { title: 'Continuous Discovery Habits', author: 'Teresa Torres', cover: continuousDiscoveryImg },
+  { title: 'Launch It', author: 'Shane Mielke', cover: launchItImg },
+  { title: "The Gamer's Brain", author: 'Celia Hodent', cover: gamersBrainImg },
+  { title: 'The Creative Gene', author: 'Hideo Kojima', cover: creativeGeneImg },
+  { title: 'Outliers', author: 'Malcolm Gladwell', cover: outliersImg },
+  { title: 'Thinking, Fast and Slow', author: 'Daniel Kahneman', cover: thinkingFastSlowImg },
+  { title: 'Radical Candor', author: 'Kim Scott', cover: radicalCandorImg },
+];
+---
+
+<section class="border-t border-border px-6 py-24 sm:px-8">
+  <div class="mx-auto max-w-6xl">
+    <h2 class="text-xl font-medium tracking-tight text-fg-muted sm:text-2xl">Shelf</h2>
+  </div>
+
+  <div
+    id="shelf-track"
+    class="mt-8 flex cursor-grab gap-5 overflow-x-auto px-6 pb-4 select-none active:cursor-grabbing sm:px-8"
+  >
+    {
+      books.map((book) => (
+        <div class="book-item w-28 shrink-0 sm:w-32">
+          <div class="aspect-[2/3] w-full overflow-hidden rounded-lg border border-border bg-bg-elevated">
+            {book.cover ? (
+              <Image
+                src={book.cover}
+                alt={book.title}
+                width={300}
+                draggable="false"
+                class="pointer-events-none h-full w-full object-cover"
+              />
+            ) : (
+              <PlaceholderImage seed={book.title} class="pointer-events-none h-full w-full" />
+            )}
+          </div>
+          <p class="mt-3 line-clamp-2 text-sm text-fg">{book.title}</p>
+          <p class="mt-1 text-xs text-fg-subtle">{book.author}</p>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  #shelf-track {
+    scrollbar-width: none;
+  }
+  #shelf-track::-webkit-scrollbar {
+    display: none;
+  }
+</style>
+
+<script>
+  const track = document.getElementById('shelf-track');
+
+  if (track) {
+    // Shuffle the shelf order on every load so it never reads as a ranking.
+    const items = Array.from(track.querySelectorAll<HTMLElement>('.book-item'));
+    for (let i = items.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [items[i], items[j]] = [items[j], items[i]];
+    }
+    items.forEach((item) => track.appendChild(item));
+
+    let isDown = false;
+    let dragged = false;
+    let startX = 0;
+    let scrollStart = 0;
+
+    track.addEventListener('mousedown', (e) => {
+      isDown = true;
+      dragged = false;
+      startX = e.pageX;
+      scrollStart = track.scrollLeft;
+    });
+
+    window.addEventListener('mouseup', () => {
+      isDown = false;
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      const dx = e.pageX - startX;
+      if (Math.abs(dx) > 3) dragged = true;
+      track.scrollLeft = scrollStart - dx;
+    });
+
+    // Swallow the click that follows a drag so it doesn't accidentally
+    // trigger anything the drag passed over.
+    track.addEventListener(
+      'click',
+      (e) => {
+        if (dragged) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      },
+      true
+    );
+  }
+</script>

@@ -1,0 +1,123 @@
+---
+coverImage: "../../assets/work/battlefield-40000.png"
+screenshots:
+  - "../../assets/work/battlefield-40000/img1.png"
+  - "../../assets/work/battlefield-40000/img2.png"
+client: "Personal"
+title: "Exploring a long-standing game concept while learning Webflow through execution"
+summary: "Building a believable landing-page experience for a long-imagined game concept. Learning Webflow by shipping, not by tutorial."
+category: "Passion Project"
+tags: ["Web Design", "Webflow", "Game Concept"]
+year: "2025"
+role: "Designer & Builder"
+responsibilities: "Concept, worldbuilding, Webflow build"
+stats:
+  - label: "Factions"
+    value: "4 shipped, 2 more concepted"
+  - label: "Maps"
+    value: "7 explorable worlds"
+liveUrl: "https://bf40k.webflow.io/"
+featured: false
+order: 8
+---
+import ProjectOverview from '../../components/content/ProjectOverview.astro';
+import ContentSplit from '../../components/content/ContentSplit.astro';
+import ContentImageFeature from '../../components/content/ContentImageFeature.astro';
+import Callout from '../../components/content/Callout.astro';
+import LearningsGrid from '../../components/content/LearningsGrid.astro';
+import ClickSlider from '../../components/ClickSlider.astro';
+import tau1 from '../../assets/work/battlefield-40000/tau-1.png';
+import tau2 from '../../assets/work/battlefield-40000/tau-2.png';
+import tau3 from '../../assets/work/battlefield-40000/tau-3.png';
+import tau4 from '../../assets/work/battlefield-40000/tau-4.png';
+import tau5 from '../../assets/work/battlefield-40000/tau-5.png';
+import guardLeader from '../../assets/work/battlefield-40000/guard-leader.png';
+import tacticsSm from '../../assets/work/battlefield-40000/tactics-sm.png';
+import tacticsCsm from '../../assets/work/battlefield-40000/tactics-csm.png';
+import tacticsTau from '../../assets/work/battlefield-40000/tactics-tau.png';
+import tacticsNecron from '../../assets/work/battlefield-40000/tactics-necron.png';
+import avaraxImg from '../../assets/work/battlefield-40000/avarax.png';
+import aboutImg from '../../assets/work/battlefield-40000/about.png';
+
+<ProjectOverview
+  goals={[
+    { title: 'Visualize a long-imagined concept:', description: 'take a Battlefield x Warhammer 40,000 crossover developed over several years in my head and give it a believable, explorable home.' },
+    { title: 'Learn Webflow through execution, not tutorials:', description: 'build the entire site directly in the tool, so the constraints of a real project taught the platform instead of a lesson plan.' },
+    { title: 'Make every faction feel distinct:', description: 'the same squad roles and reinforcement systems, reinterpreted through each faction\'s own doctrine and identity.' },
+    { title: 'Build a world worth exploring:', description: 'seven battlefields with their own history, stakes, and reason for being fought over.' },
+  ]}
+>
+  <p>This project served two goals at once: visualizing a game concept developed over several years, and gaining real Webflow proficiency through execution rather than tutorials. The focus was on translating the concept beyond static mockups, exploring how presentation, motion, and structure could bring a hypothetical game to life.</p>
+</ProjectOverview>
+
+## The Concept
+
+The hypothetical game combines large-scale, squad-based multiplayer with a faction-driven, darker sci-fi setting: Battlefield's combined-arms warfare crossed with Warhammer 40,000's grim, faction-obsessed universe.
+
+Rather than designing a complete game, the project aimed to establish tone, worldbuilding, and suggested gameplay roles, and to create a believable landing-page experience around that speculative framing.
+
+<Callout quote="In the grim darkness of the far future, Battlefield is reborn." center />
+
+## Strategy & Execution
+
+The entire build happened directly in Webflow, with emphasis on page structure and scroll pacing, visual hierarchy across long-form layouts, atmospheric imagery, and section transitions that guide narrative flow. Every faction needed its own page, its own tone, and its own complete breakdown of weapons, vehicles, and tactics, without ever implying one faction was simply stronger than another on paper.
+
+Space Marines, Chaos Space Marines, T'au, and Necrons each got a full page: their own hero art, their own primary and secondary weapons, throwables, melee, and vehicles. Balance stays in the gameplay mechanics, not the lore, so no faction reads as objectively stronger than another.
+
+## The Same Five Roles, Told Differently
+
+Every faction has access to the same five squad roles, but the expression of each one shifts with the faction playing it. A Support player is an Apothecary with healing packs and fast revives for the Space Marines, but a Necron Support instead reanimates fallen warriors. The role stays the same. The tool changes.
+
+Here's that system in practice: the T'au faction page, cycling through all five roles.
+
+<ClickSlider
+  images={[tau1, tau2, tau3, tau4, tau5]}
+  alt="The T'au faction page's squad roles panel, cycling through Squad Leader, Assault, Engineer, Support, and Recon"
+  captions={[
+    'Squad Leader, the Tactical Core: marks objectives, calls in reinforcements, and rallies the squad under fire.',
+    'Assault, the Shock Trooper: breaks enemy lines and executes focused strikes as the spearpoint of the Fire Caste.',
+    'Engineer, the War Engineer: repairs battlesuits under fire and neutralizes threats with anti-armor systems.',
+    'Support, the Battle Sustainer: deploys shield drones and reinforces squad cohesion under pressure.',
+    'Recon, the Overwatch: marks targets, deploys sensors, and enables precision strikes from a distance.',
+  ]}
+/>
+
+<ContentSplit heading="Concept Work Beyond the Shipped Page" image={guardLeader} imageAlt="A concept mockup for an Astra Militarum Commissar as Squad Leader, a faction planned but not yet built into the live site" imagePosition="left">
+  <p>Two more factions exist beyond what's live on the site, including an Astra Militarum Commissar reimagined as Squad Leader. They're planned out, not shipped: sourcing the imagery, writing the copy, and building out full pages for every faction was more than a free Webflow plan and the available time could cover.</p>
+</ContentSplit>
+
+## A Reinforcement System Per Faction
+
+Each faction earns its own version of the same resource loop under a different name, spent on reinforcements that fit its own identity: Space Marines call in an Orbital Requisition, Chaos channels Warp Influence, T'au routes a Tactical Command Uplink, and Necrons gather Quantum Resonance.
+
+<ClickSlider
+  images={[tacticsSm, tacticsCsm, tacticsTau, tacticsNecron]}
+  alt="The Tactics section for each faction, showing its own named resource and reinforcement abilities"
+  captions={[
+    'Space Marines earn Orbital Requisition Points, spent on reinforcements like a Jump Pack or a Chapter Banner.',
+    'Chaos Squad Leaders earn Warp Influence instead, spent on reinforcements twisted by the Dark Gods, like a Daemonic Ritual.',
+    'T\'au Squad Leaders earn a Tactical Command Uplink, calling in orbital strikes and holographic squad decoys.',
+    'Necron Squad Leaders gather Quantum Resonance Points, fueling squad-wide reanimation and phase shifts.',
+  ]}
+/>
+
+<ContentSplit heading="Building a World Worth Fighting Over" image={avaraxImg} imageAlt="Avarax, a hive-world battlefield covered in gothic industrial architecture" imagePosition="right">
+  <p>Avarax is a juggernaut of industry, containing cities and logistic hubs that span entire continents. Its biosphere has collapsed into a desert wasteland from the exponential over-exploitation of the planet's natural resources, and almost its entire surface is now devoted to manufacturing and transport.</p>
+</ContentSplit>
+
+## Seven Battlefields, Seven Reasons to Fight
+
+Every map got its own history: a Hive World stripped to ferrocrete and plasteel, a disciplined fortress-world under Necron siege, an excavation site hiding a Necron Tomb World beneath it. None of them are just a backdrop. Each one explains why the fight is happening there.
+
+<LearningsGrid heading="Outcome" items={[
+  { icon: 'layers', title: 'A Fully Fleshed-Out Concept', description: 'Four playable factions, seven battlefields, and over 100 pieces of unique equipment, all built to feel like a real, shippable game.' },
+  { icon: 'branch', title: 'Systems That Flex Per Faction', description: 'The same five squad roles and reinforcement system reinterpreted four different ways, from Orbital Requisition Points to Quantum Resonance.' },
+  { icon: 'compass', title: 'Webflow Mastery Through Execution', description: 'Long-form pages depend on hierarchy and pacing. Building end-to-end exposed gaps that mockups would have concealed.' },
+  { icon: 'eye', title: 'Concept Work Beyond the Shipped Site', description: 'Two additional factions planned and concepted beyond what time and a free Webflow plan allowed to ship.' },
+]} />
+
+<ContentImageFeature heading="A Quick Word" image={aboutImg} imageAlt="The About page, explaining that the project is purely conceptual and walking through its own FAQ">
+  <p>The site includes its own About page: a plain admission that this is fan concept work, not a real EA or Games Workshop project, followed by an FAQ answering the questions that came up the last time a project like this went out into the world.</p>
+</ContentImageFeature>
+
+<Callout quote="It's not perfect. It doesn't look great on mobile. It's very image heavy. But it was a learning experience." center />
