@@ -2,10 +2,6 @@
 coverImage: "../../assets/work/escape-from-tarkov.png"
 screenshots:
   - "../../assets/work/escape-from-tarkov/01-workbench.png"
-  - "../../assets/work/escape-from-tarkov/02-ammo-stats-a.png"
-  - "../../assets/work/escape-from-tarkov/03-ammo-stats-b.png"
-  - "../../assets/work/escape-from-tarkov/04-scope-a.png"
-  - "../../assets/work/escape-from-tarkov/05-scope-b.png"
   - "../../assets/work/escape-from-tarkov/06-lobby.png"
 client: "Battlestate Games"
 title: "Exploring usability improvements for a deeply complex extraction shooter"
@@ -18,23 +14,64 @@ responsibilities: "Information design, UI concepts"
 featured: false
 order: 10
 ---
+import ProjectOverview from '../../components/content/ProjectOverview.astro';
+import ContentSplit from '../../components/content/ContentSplit.astro';
+import ContentImageFeature from '../../components/content/ContentImageFeature.astro';
+import Callout from '../../components/content/Callout.astro';
+import LearningsGrid from '../../components/content/LearningsGrid.astro';
+import ammoStatsA from '../../assets/work/escape-from-tarkov/02-ammo-stats-a.png';
+import ammoStatsB from '../../assets/work/escape-from-tarkov/03-ammo-stats-b.png';
+import scopeA from '../../assets/work/escape-from-tarkov/04-scope-a.png';
+import scopeB from '../../assets/work/escape-from-tarkov/05-scope-b.png';
 
-## Overview
-
-Escape from Tarkov is a deeply complex extraction shooter built around inventory management, weapon customization, economy systems, and high-consequence gameplay. This exploration looked at how clearer UX patterns and information hierarchy could improve usability while preserving the game's hardcore identity.
+<ProjectOverview
+  goals={[
+    { title: 'Reduce reliance on third-party tools:', description: 'surface the stats players were alt-tabbing to wikis and spreadsheets for, directly in the UI.' },
+    { title: 'Preserve the hardcore identity:', description: 'improve clarity without simplifying the systems that make Tarkov Tarkov.' },
+    { title: 'Fix specific friction points:', description: 'tooltips that hide the very data they exist to explain, previews that show too little to decide on.' },
+    { title: 'Design within the real system:', description: "explore changes that could plausibly ship inside Escape from Tarkov's actual UI, not a wholesale redesign." },
+  ]}
+>
+  <p>Escape from Tarkov is a deeply complex extraction shooter built around inventory management, weapon customization, economy systems, and high-consequence gameplay. This exploration looked at how clearer UX patterns and information hierarchy could improve usability while preserving the game's hardcore identity.</p>
+</ProjectOverview>
 
 ## The Problem
 
-The game's depth creates real friction: heavy memorization demands, reliance on external wikis, trial-and-error learning, and dense menu navigation. The opportunity was in improving how information surfaces, not in oversimplifying the underlying systems.
+- Heavy memorization demands, offloaded to notebooks and spreadsheets
+- Reliance on third-party wikis just to make a basic loadout decision
+- Trial-and-error learning, with real, consequence-heavy stakes
+- Dense menus that bury the stats that actually matter
+- UI elements that sometimes work against the information they're meant to surface
+
+<Callout eyebrow="Problem to solve" center>
+  <p>The opportunity was in improving how information surfaces, not in oversimplifying the underlying systems.</p>
+</Callout>
 
 ## Strategy & Execution
 
-**Ammunition systems:** Critical stats were often hidden or hard to compare quickly. Explorations focused on clearer stat hierarchy, better comparison visibility, more readable penetration and damage information, and faster decision-making during loadout prep, with the goal of reducing dependence on third-party spreadsheets.
+Two areas carried the clearest, most specific friction: ammunition stats, where the numbers that decide a fight are hard to compare quickly, and scopes, where a purchase decision often came down to a single small thumbnail.
 
-**Scopes and optics:** A lightweight preview system let players inspect reticles and compare optics before committing to a purchase, reducing experimentation friction.
+<ContentSplit heading="Ammunition Stats You Can Actually Compare" image={ammoStatsA} imageAlt="An in-game ammo examine screen where the penetration tooltip overlaps the armor damage and fragmentation stats next to it" imagePosition="right">
+  <p>Critical stats like penetration, armor damage, and fragmentation chance were often hard to compare at a glance. Here, the tooltip meant to explain penetration ends up covering the two stats next to it, exactly the kind of friction that sends a player to a spreadsheet instead.</p>
+</ContentSplit>
 
-## Learnings
+<ContentImageFeature heading="Letting Color Replace the Tooltip" image={ammoStatsB} imageAlt="Three color-coded explorations of the armor-penetration table, using color instead of a hover state to show tier effectiveness" preserveAspect>
+  <p>Three explorations for surfacing that same tier-by-tier penetration data through color instead of a hover state, so the numbers that matter most are visible immediately, not hidden behind a tooltip.</p>
+</ContentImageFeature>
 
-> Hardcore systems still benefit from clarity and hierarchy.
+<Callout quote="Hardcore systems still benefit from clarity and hierarchy." center />
 
-Expert users prioritize efficiency over simplification, information density requires disciplined prioritization, and strong UX can preserve complexity while still reducing friction.
+<ContentSplit heading="A Single Thumbnail Isn't Enough" image={scopeA} imageAlt="An in-game scope examine screen showing only a single small reticle thumbnail" imagePosition="right">
+  <p>Some scopes showed nothing more than a small reticle thumbnail tucked in the corner, not much to judge a purchase by when the alternative was checking a wiki first.</p>
+</ContentSplit>
+
+<ContentSplit heading="Comparing Reticles Before You Commit" image={scopeB} imageAlt="An in-game scope examine screen showing two reticle previews side by side for direct comparison" imagePosition="left">
+  <p>Other scopes already did this better, letting a player compare reticle options side by side before installing. The idea explored here was making that pattern consistent everywhere, not just on the scopes that happened to support it.</p>
+</ContentSplit>
+
+<LearningsGrid heading="Outcome" items={[
+  { icon: 'target', title: 'Expert Users Want Efficiency, Not Simplicity', description: 'Tarkov players optimize for speed and precision. Removing depth would cost more goodwill than any friction it fixed.' },
+  { icon: 'layers', title: 'Density Needs Discipline', description: 'Surfacing more stats only helps if hierarchy makes clear which one matters most right now.' },
+  { icon: 'eye', title: 'Hide the System, Not the Information', description: 'A tooltip meant to clarify a stat should never cover the stats next to it. Small overlaps like that push players toward third-party tools.' },
+  { icon: 'compass', title: 'Clarity and Complexity Can Coexist', description: 'Strong UX preserved the hardcore identity while cutting the friction that had nothing to do with the game itself.' },
+]} />
