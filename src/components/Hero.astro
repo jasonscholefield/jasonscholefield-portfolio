@@ -33,8 +33,9 @@ const icons: Record<string, string> = {
 };
 ---
 
-<section class="px-6 pt-36 pb-20 sm:px-8 sm:pt-44 sm:pb-24">
-  <div class="mx-auto max-w-6xl">
+<section class="relative overflow-hidden px-6 pt-36 pb-20 sm:px-8 sm:pt-44 sm:pb-24">
+  <div id="hero-shader" class="pointer-events-none absolute inset-0 z-0 opacity-[0.01] mix-blend-screen"></div>
+  <div class="relative z-10 mx-auto max-w-6xl">
     <p class="text-sm text-fg-subtle">Senior Product Designer &middot; Based in the U.S.</p>
 
     <h1 class="mt-6 text-6xl leading-[0.95] font-bold tracking-tight text-fg sm:mt-8 sm:text-7xl lg:text-[120px]">
@@ -106,6 +107,49 @@ const icons: Record<string, string> = {
 </style>
 
 <script>
+  import {
+    ShaderMount,
+    ditheringFragmentShader,
+    getShaderColorFromString,
+    DitheringShapes,
+    DitheringTypes,
+    defaultPatternSizing,
+  } from '@paper-design/shaders';
+
+  const shaderEl = document.getElementById('hero-shader');
+  if (shaderEl) {
+    const accent = '#ffffff';
+
+    const mount = new ShaderMount(
+      shaderEl,
+      ditheringFragmentShader,
+      {
+        u_colorBack: getShaderColorFromString('#00000000'),
+        u_colorFront: getShaderColorFromString(accent),
+        u_shape: DitheringShapes.warp,
+        u_type: DitheringTypes['4x4'],
+        u_pxSize: 2,
+        u_fit: 0, // none, matches defaultPatternSizing.fit
+        u_scale: 0.6,
+        u_rotation: defaultPatternSizing.rotation,
+        u_offsetX: defaultPatternSizing.offsetX,
+        u_offsetY: defaultPatternSizing.offsetY,
+        u_originX: defaultPatternSizing.originX,
+        u_originY: defaultPatternSizing.originY,
+        u_worldWidth: defaultPatternSizing.worldWidth,
+        u_worldHeight: defaultPatternSizing.worldHeight,
+      },
+      undefined,
+      0.2,
+      undefined,
+      1
+    );
+
+    const section = shaderEl.closest('section');
+    section?.addEventListener('mouseenter', () => mount.setSpeed(0.6));
+    section?.addEventListener('mouseleave', () => mount.setSpeed(0.2));
+  }
+
   document.querySelectorAll<HTMLElement>('.hero-block').forEach((block) => {
     const words = Array.from(block.querySelectorAll<HTMLElement>('.hw'));
     const plains = Array.from(block.querySelectorAll<HTMLElement>('.hero-plain'));
