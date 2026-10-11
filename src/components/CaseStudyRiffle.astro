@@ -1,0 +1,255 @@
+---
+interface Props {
+  entries: { id: string; label: string; meta: string }[];
+  class?: string;
+}
+
+const { entries, class: className = '' } = Astro.props;
+---
+
+<nav aria-label="Featured case studies" class={`rf ${className}`} data-riffle>
+  <div class="rf-stage">
+    <div class="rf-plane">
+      <i class="rf-marker" data-m="0" aria-hidden="true"></i>
+      <i class="rf-marker" data-m="1" aria-hidden="true"></i>
+      {
+        entries.map((entry, i) => (
+          <a class="rf-card" href={`/work/${entry.id}`} data-card style={`--i: ${i}`}>
+            <span class="rf-label">{entry.label}</span>
+            <span class="rf-meta">{entry.meta}</span>
+            <span class="rf-arrow" aria-hidden="true">&rarr;</span>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</nav>
+
+<style>
+  .rf {
+    --rf-w: 270px;
+    --rf-h: 170px;
+    --rf-gap: 64px;
+    --rf-rest: -70deg;
+    width: 100%;
+  }
+
+  .rf-stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    perspective: 1800px;
+  }
+
+  .rf-plane {
+    position: absolute;
+    left: 30%;
+    top: 84%;
+    width: var(--rf-w);
+    height: 0;
+    transform-style: preserve-3d;
+    transform: translateX(-50%) rotateX(58deg) rotateZ(38deg);
+  }
+
+  @media (max-width: 1279px) {
+    .rf-plane {
+      left: 18%;
+      scale: 0.82;
+    }
+  }
+
+  @media (max-width: 639px) {
+    .rf-plane {
+      left: 14%;
+      top: 80%;
+      scale: 0.64;
+    }
+  }
+
+  .rf-marker {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    transform-style: preserve-3d;
+    pointer-events: none;
+  }
+
+  /* Markers sit on the visible top strip of the resting cards 0 and 1, so the
+     pointer maps to a card from static geometry, not from the moving cards. */
+  .rf-marker[data-m='0'] {
+    transform: translate3d(0, 0, 0) rotateX(var(--rf-rest)) translateY(calc(var(--rf-h) * -1 + 16px));
+  }
+  .rf-marker[data-m='1'] {
+    transform: translate3d(0, calc(var(--rf-gap) * -1), 0) rotateX(var(--rf-rest)) translateY(calc(var(--rf-h) * -1 + 16px));
+  }
+
+  .rf-card {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: var(--rf-h);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border: 1px solid var(--color-border-strong);
+    border-radius: 10px;
+    background: var(--color-bg-elevated);
+    color: var(--color-fg);
+    text-decoration: none;
+    transform-origin: 50% 100%;
+    transform: translate3d(0, calc(var(--rf-gap) * var(--i) * -1 + var(--ty, 0px)), var(--tz, 0px))
+      rotateX(var(--a, var(--rf-rest)));
+    transition:
+      transform 700ms cubic-bezier(0.22, 1, 0.36, 1) var(--delay, 0ms),
+      border-color 0.3s ease,
+      background-color 0.3s ease;
+  }
+
+  .rf-card[data-active] {
+    border-color: var(--color-accent);
+    background: var(--color-bg-elevated-hover);
+  }
+
+  .rf-card:focus-visible {
+    outline: none;
+    border-color: var(--color-accent);
+  }
+
+  .rf-label {
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+
+  .rf-meta {
+    font-size: 12px;
+    color: var(--color-fg-subtle);
+  }
+
+  .rf-arrow {
+    position: absolute;
+    right: 16px;
+    bottom: 12px;
+    font-size: 18px;
+    color: var(--color-fg-muted);
+    transition: color 0.3s ease;
+  }
+
+  .rf-card[data-active] .rf-arrow {
+    color: var(--color-accent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rf-card {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const REST = -70;
+  const STAND = -90;
+  const LIFT = 26;
+  const PULL = 16;
+
+  document.querySelectorAll<HTMLElement>('[data-riffle]').forEach((root) => {
+    const cards = Array.from(root.querySelectorAll<HTMLAnchorElement>('[data-card]'));
+    const m0 = root.querySelector<HTMLElement>('[data-m="0"]');
+    const m1 = root.querySelector<HTMLElement>('[data-m="1"]');
+    const stage = root.querySelector<HTMLElement>('.rf-stage');
+    if (!m0 || !m1 || !stage || cards.length === 0) return;
+
+    let active: number | null = null;
+
+    const apply = (idx: number | null) => {
+      active = idx;
+      cards.forEach((card, i) => {
+        if (idx === null) {
+          card.style.setProperty('--a', `${REST}deg`);
+          card.style.setProperty('--tz', '0px');
+          card.style.setProperty('--ty', '0px');
+          card.style.setProperty('--delay', '0ms');
+          card.removeAttribute('data-active');
+          return;
+        }
+        const d = i - idx; // negative: in front of the pulled card, positive: behind it
+        const reach = Math.abs(d);
+        let angle = REST;
+        let tz = 0;
+        let ty = 0;
+        if (d === 0) {
+          angle = STAND;
+          tz = LIFT;
+          ty = PULL;
+        } else if (d < 0) {
+          // In front: lean forward past upright, fading with distance.
+          angle = STAND - 26 * Math.pow(0.68, reach - 1);
+        } else {
+          // Behind: lean back toward the tray, fading with distance.
+          angle = REST + 20 * Math.pow(0.68, reach - 1);
+        }
+        card.style.setProperty('--a', `${angle}deg`);
+        card.style.setProperty('--tz', `${tz}px`);
+        card.style.setProperty('--ty', `${ty}px`);
+        card.style.setProperty('--delay', `${reach * 40}ms`);
+        if (d === 0) card.setAttribute('data-active', '');
+        else card.removeAttribute('data-active');
+      });
+    };
+
+    const centre = (el: HTMLElement) => {
+      const r = el.getBoundingClientRect();
+      return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+    };
+
+    const indexAt = (clientX: number, clientY: number) => {
+      const o = centre(m0);
+      const n = centre(m1);
+      const vx = n.x - o.x;
+      const vy = n.y - o.y;
+      const len = vx * vx + vy * vy || 1;
+      const t = ((clientX - o.x) * vx + (clientY - o.y) * vy) / len;
+      return Math.max(0, Math.min(cards.length - 1, Math.round(t)));
+    };
+
+    stage.addEventListener('pointermove', (e) => {
+      if (e.pointerType === 'touch') return;
+      const idx = indexAt(e.clientX, e.clientY);
+      if (idx !== active) apply(idx);
+    });
+    stage.addEventListener('pointerleave', () => apply(null));
+
+    // A click goes to the card that is pulled, which is the one the pointer is on.
+    cards.forEach((card, i) => {
+      card.addEventListener('click', (e) => {
+        if (e.detail > 0 && active !== null && active !== i) {
+          e.preventDefault();
+          window.location.href = cards[active].href;
+        }
+      });
+      card.addEventListener('focus', () => apply(i));
+    });
+    root.addEventListener('focusout', (e) => {
+      if (!root.contains(e.relatedTarget as Node | null)) apply(null);
+    });
+
+    root.addEventListener('keydown', (e) => {
+      const current = active ?? cards.findIndex((c) => c === document.activeElement);
+      if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+        e.preventDefault();
+        cards[Math.min(cards.length - 1, (current < 0 ? -1 : current) + 1)].focus();
+      } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+        e.preventDefault();
+        cards[Math.max(0, (current < 0 ? cards.length : current) - 1)].focus();
+      } else if (e.key === 'Escape') {
+        (document.activeElement as HTMLElement | null)?.blur();
+        apply(null);
+      }
+    });
+  });
+</script>
