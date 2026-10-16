@@ -8,24 +8,25 @@ const { entries, class: className = '' } = Astro.props;
 
 // Folder silhouette: a body with a notched tab whose position steps across the
 // card, so the tabs of neighbouring cards never stack on top of each other.
-const W = 270;
+const W = 250;
 const H = 170;
-const TAB = 18;
-const TAB_W = 74;
-const TAB_X = [20, 98, 176];
+const TAB = 24;
+const TAB_X = [10, 52, 94];
 
-const folderPath = (tx: number) =>
+const tabWidth = (label: string) => Math.min(W - 20, Math.max(100, Math.round(label.length * 7.4 + 62)));
+
+const folderPath = (tx: number, tw: number) =>
   `M0.5 ${TAB + H - 1} V${TAB + 8} Q0.5 ${TAB} 8.5 ${TAB} H${tx - 6} Q${tx} ${TAB} ${tx + 2} ${TAB - 4} ` +
-  `L${tx + 6} 6 Q${tx + 8} 1.5 ${tx + 14} 1.5 H${tx + TAB_W - 14} Q${tx + TAB_W - 8} 1.5 ${tx + TAB_W - 6} 6 ` +
-  `L${tx + TAB_W - 2} ${TAB - 4} Q${tx + TAB_W} ${TAB} ${tx + TAB_W + 6} ${TAB} H${W - 8.5} Q${W - 0.5} ${TAB} ${W - 0.5} ${TAB + 8} ` +
+  `L${tx + 6} 7 Q${tx + 8} 1.5 ${tx + 14} 1.5 H${tx + tw - 14} Q${tx + tw - 8} 1.5 ${tx + tw - 6} 7 ` +
+  `L${tx + tw - 2} ${TAB - 4} Q${tx + tw} ${TAB} ${tx + tw + 6} ${TAB} H${W - 8.5} Q${W - 0.5} ${TAB} ${W - 0.5} ${TAB + 8} ` +
   `V${TAB + H - 1} Z`;
 
-// A small grid of dots on each tab, like the original's punched marks.
-const tabDots = (tx: number) => {
+// A small grid of dots at the end of each tab, like the original's punched marks.
+const tabDots = (tx: number, tw: number) => {
   const dots: { cx: number; cy: number }[] = [];
   for (let row = 0; row < 2; row++) {
-    for (let col = 0; col < 4; col++) {
-      dots.push({ cx: tx + 22 + col * 8, cy: 7 + row * 5 });
+    for (let col = 0; col < 3; col++) {
+      dots.push({ cx: tx + tw - 30 + col * 7, cy: 9 + row * 5 });
     }
   }
   return dots;
@@ -38,16 +39,20 @@ const tabDots = (tx: number) => {
       <i class="rf-marker" data-m="0" aria-hidden="true"></i>
       <i class="rf-marker" data-m="1" aria-hidden="true"></i>
 
+      <div class="rf-ghost" aria-hidden="true"></div>
       <div class="rf-floor" aria-hidden="true"></div>
+      <div class="rf-wall rf-wall-back" aria-hidden="true"></div>
+      <div class="rf-wall rf-wall-left" aria-hidden="true"></div>
 
       {
         entries.map((entry, i) => {
-          const tx = TAB_X[i % TAB_X.length];
+          const tw = tabWidth(entry.label);
+          const tx = Math.min(TAB_X[i % TAB_X.length], W - 10 - tw);
           return (
-            <a class="rf-card" href={`/work/${entry.id}`} data-card style={`--i: ${i}`}>
+            <a class="rf-card" href={`/work/${entry.id}`} data-card style={`--i: ${i}; --tx: ${tx}px`}>
               <svg class="rf-shape" viewBox={`0 0 ${W} ${TAB + H}`} preserveAspectRatio="none" aria-hidden="true">
-                <path d={folderPath(tx)} />
-                {tabDots(tx).map((d) => (
+                <path d={folderPath(tx, tw)} />
+                {tabDots(tx, tw).map((d) => (
                   <circle class="rf-dot" cx={d.cx} cy={d.cy} r="1" />
                 ))}
               </svg>
@@ -63,21 +68,24 @@ const tabDots = (tx: number) => {
       <div class="rf-wall rf-wall-front" aria-hidden="true">
         <span class="rf-handle"></span>
       </div>
+      <div class="rf-rim" aria-hidden="true"></div>
     </div>
   </div>
 </nav>
 
 <style>
   .rf {
-    --rf-w: 270px;
+    --rf-w: 250px;
     --rf-h: 170px;
-    --rf-gap: 56px;
+    --rf-tab: 24px;
+    --rf-gap: 44px;
     --rf-rest: -90deg;
-    --rf-wall: 76px;
+    --rf-wall: 66px;
     --rf-pad-x: 14px;
-    --rf-pad-front: 28px;
-    --rf-pad-back: 22px;
-    --rf-line: var(--color-border-strong);
+    --rf-pad-front: 22px;
+    --rf-pad-back: 14px;
+    --rf-line: #5a5a62;
+    --rf-long: calc(var(--rf-gap) * 7 + var(--rf-pad-front) + var(--rf-pad-back));
     width: 100%;
   }
 
@@ -92,7 +100,7 @@ const tabDots = (tx: number) => {
     position: absolute;
     left: 30%;
     top: 76%;
-    scale: 0.88;
+    scale: 1.18;
     width: var(--rf-w);
     height: 0;
     transform-style: preserve-3d;
@@ -101,8 +109,8 @@ const tabDots = (tx: number) => {
 
   @media (max-width: 1279px) {
     .rf-plane {
-      left: 6%;
-      scale: 0.7;
+      left: 14%;
+      scale: 0.8;
     }
   }
 
@@ -113,9 +121,9 @@ const tabDots = (tx: number) => {
     }
 
     .rf-plane {
-      left: 16%;
+      left: 22%;
       top: 84%;
-      scale: 0.62;
+      scale: 0.7;
     }
   }
 
@@ -138,18 +146,37 @@ const tabDots = (tx: number) => {
     transform: translate3d(0, calc(var(--rf-gap) * -1), 0) rotateX(var(--rf-rest)) translateY(calc(var(--rf-h) * -1 + 12px));
   }
 
-  /* The bin: a floor, a front wall with a handle slot, and the near side wall. */
-  .rf-floor {
+  /* The bin: a floor, four walls of one height, and a rim that closes the top. */
+  .rf-floor,
+  .rf-ghost,
+  .rf-rim {
     position: absolute;
     left: calc(var(--rf-pad-x) * -1);
     width: calc(100% + var(--rf-pad-x) * 2);
     bottom: calc(var(--rf-pad-front) * -1);
-    height: calc(var(--rf-gap) * 7 + var(--rf-pad-front) + var(--rf-pad-back));
+    height: var(--rf-long);
     border: 1px solid var(--rf-line);
-    border-radius: 14px;
+    border-radius: 12px;
+    pointer-events: none;
+  }
+
+  .rf-floor {
     background: #08080a;
     transform: translateZ(-1px);
-    pointer-events: none;
+  }
+
+  /* A faint second outline under the bin, so it reads as sitting on a surface. */
+  .rf-ghost {
+    border-color: rgba(255, 255, 255, 0.08);
+    transform: translateZ(-16px);
+  }
+
+  .rf-rim {
+    transform: translateZ(var(--rf-wall));
+    border-color: var(--rf-line);
+    box-shadow:
+      inset 0 0 0 7px #131316,
+      inset 0 0 0 8px var(--rf-line);
   }
 
   .rf-wall {
@@ -157,24 +184,40 @@ const tabDots = (tx: number) => {
     height: var(--rf-wall);
     bottom: 0;
     border: 1px solid var(--rf-line);
-    background: linear-gradient(180deg, #121215, #0b0b0d);
+    background: linear-gradient(180deg, #141418, #0c0c0f);
     pointer-events: none;
   }
 
   .rf-wall-front {
     left: calc(var(--rf-pad-x) * -1);
     width: calc(100% + var(--rf-pad-x) * 2);
-    border-radius: 6px 6px 14px 14px;
+    border-radius: 4px 4px 12px 12px;
     transform-origin: 50% 100%;
     transform: translateY(var(--rf-pad-front)) rotateX(-90deg);
   }
 
-  .rf-wall-right {
-    left: calc(100% + var(--rf-pad-x));
-    width: calc(var(--rf-gap) * 7 + var(--rf-pad-front) + var(--rf-pad-back));
-    border-radius: 6px 6px 14px 14px;
+  .rf-wall-back {
+    left: calc(var(--rf-pad-x) * -1);
+    width: calc(100% + var(--rf-pad-x) * 2);
+    border-radius: 4px 4px 12px 12px;
+    transform-origin: 50% 100%;
+    transform: translateY(calc(var(--rf-gap) * -7 - var(--rf-pad-back))) rotateX(-90deg);
+  }
+
+  .rf-wall-right,
+  .rf-wall-left {
+    width: var(--rf-long);
+    border-radius: 4px 4px 12px 12px;
     transform-origin: 0 100%;
     transform: translateY(var(--rf-pad-front)) rotateZ(-90deg) rotateX(-90deg);
+  }
+
+  .rf-wall-right {
+    left: calc(100% + var(--rf-pad-x));
+  }
+
+  .rf-wall-left {
+    left: calc(var(--rf-pad-x) * -1);
   }
 
   .rf-handle {
@@ -208,7 +251,7 @@ const tabDots = (tx: number) => {
     left: 0;
     bottom: 0;
     width: 100%;
-    height: calc(100% + 18px);
+    height: calc(100% + var(--rf-tab));
     overflow: visible;
     fill: var(--color-bg);
     stroke: var(--rf-line);
@@ -241,7 +284,7 @@ const tabDots = (tx: number) => {
     position: absolute;
     left: 16px;
     right: 16px;
-    top: 50px;
+    top: 20px;
     bottom: 40px;
     background: repeating-linear-gradient(
       180deg,
@@ -255,10 +298,9 @@ const tabDots = (tx: number) => {
 
   .rf-label {
     position: absolute;
-    left: 16px;
-    top: 6px;
-    right: 16px;
-    font-size: 15px;
+    left: calc(var(--tx) + 14px);
+    top: calc(var(--rf-tab) * -1 + 6px);
+    font-size: 13px;
     font-weight: 600;
     line-height: 1.2;
     letter-spacing: -0.01em;
