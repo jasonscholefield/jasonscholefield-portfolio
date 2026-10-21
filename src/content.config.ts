@@ -23,6 +23,7 @@ const work = defineCollection({
     tags: z.array(z.string()),
     year: z.string(),
     role: z.string(),
+    team: z.string().optional(),
     responsibilities: z.string().optional(),
     tools: z.array(z.string()).optional(),
     stats: z.array(z.object({ label: z.string(), value: z.string() })).optional(),

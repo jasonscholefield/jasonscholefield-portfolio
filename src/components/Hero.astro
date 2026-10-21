@@ -1,20 +1,16 @@
 ---
 import { getCollection } from 'astro:content';
 import CaseStudyRiffle from './CaseStudyRiffle.astro';
+import { displayName, kicker } from '../lib/work';
 
-// "Personal" projects have no client name to show, so they get a display name.
-const displayNames: Record<string, string> = {
-  'arizona-ballot-guide': 'Arizona Ballot Guide',
-  'battlefield-40000': 'Battlefield 40,000',
-};
-
+// The tray shows the same featured case studies as the work list, in the same order.
 const riffleEntries = (await getCollection('work'))
+  .filter((entry) => entry.data.featured)
   .sort((a, b) => a.data.order - b.data.order)
-  .slice(0, 8)
   .map((entry) => ({
     id: entry.id,
-    label: displayNames[entry.id] ?? entry.data.client,
-    meta: `${entry.data.category} · ${entry.data.year}`,
+    label: displayName(entry),
+    meta: kicker(entry),
   }));
 
 const words = [

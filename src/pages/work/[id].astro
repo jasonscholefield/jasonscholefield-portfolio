@@ -14,7 +14,7 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { client, title, summary, category, tags, year, role, responsibilities, tools, liveUrl, screenshots, beforeAfters } = entry.data;
+const { client, title, summary, category, tags, year, role, team, responsibilities, tools, liveUrl, screenshots, beforeAfters } = entry.data;
 const leadImages = (screenshots ?? []).slice(0, 2);
 const restScreenshots = (screenshots ?? []).slice(2);
 const { Content } = await render(entry);
@@ -48,6 +48,7 @@ const { Content } = await render(entry);
           <div>
             <dt class="text-xs text-fg-subtle">Role</dt>
             <dd class="mt-1 text-sm text-fg">{role}</dd>
+            {team && <dd class="mt-1.5 text-xs leading-relaxed text-fg-muted">{team}</dd>}
           </div>
           <div>
             <dt class="text-xs text-fg-subtle">Timeline</dt>

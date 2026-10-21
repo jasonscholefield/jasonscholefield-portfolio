@@ -10,9 +10,15 @@ category: "Product Design"
 tags: ["Enterprise", "Healthcare", "Workflow Design", "Agentic AI"]
 year: "2025"
 role: "Senior Product Designer"
+team: "Contract designer through Scholefield Consulting. I designed the data-change workflow and helped on the CRA dashboard and agent experiences."
 responsibilities: "Journey mapping, workflow redesign, agentic AI platform design"
+stats:
+  - label: "Support tickets, first 3 months after launch"
+    value: "0, against a goal of 0"
+  - label: "Team award"
+    value: "Medicine Maker Innovation Award 2025 · CRA Agent"
 featured: true
-order: 3
+order: 1
 ---
 import ProjectOverview from '../../components/content/ProjectOverview.astro';
 import ContentSplit from '../../components/content/ContentSplit.astro';
@@ -107,9 +113,9 @@ To see it in practice, imagine a CRA needs to correct a participant's answer fro
 
 ## The Agentic Dashboard
 
-Beyond this workflow redesign, I worked with Medable's design team to build out every screen in the platform's broader agentic AI experience. Much of it came together during an on-site workshop in Chicago, where most of the company spent a week designing and building the experience on the fly to pitch a major sponsor in the industry.
+Beyond this workflow redesign, I worked with Medable's design team on screens across the platform's broader agentic AI experience. Much of it came together during an on-site workshop in Chicago, where most of the company spent a week designing and building the experience on the fly to pitch a major sponsor in the industry. The CRA Agent that came out of that work won the Medicine Maker Innovation Award 2025. It was a team award, and my part was the dashboard and agent screens I helped design.
 
-The platform itself is a model-agnostic system built for GxP-regulated environments, connecting to 15+ clinical and enterprise tools like Veeva, Oracle, Medidata, and Snowflake through more than 30 validated connectors. Every recommendation an agent makes stays fully observable, explainable, and auditable, which matters as much as the recommendation itself in a regulated trial.
+For context on the platform (company-wide figures, not results of my work): it is a model-agnostic system built for GxP-regulated environments, connecting to 15+ clinical and enterprise tools like Veeva, Oracle, Medidata, and Snowflake through more than 30 validated connectors. Every recommendation an agent makes stays fully observable, explainable, and auditable, which matters as much as the recommendation itself in a regulated trial.
 
 <h3 class="not-prose text-2xl font-medium tracking-tight text-fg">Agent Studio</h3>
 
@@ -143,7 +149,7 @@ Agent Studio is where these agents get built and managed: a library of AI agents
 </div>
 
 <ContentSplit heading="Built for Global Trials" image={worldwideMapImg} imageAlt="A world map showing Medable's global reach across clinical trial sites" imagePosition="right">
-  <p>The Translation Workbench automates that same agentic approach for clinical content localization, with AI-driven translation across 80+ countries and 120+ locales and quality control built into the review step, not bolted on after. That scale is part of what lets studies run across 65+ countries with 99% on-time delivery.</p>
+  <p>The Translation Workbench automates that same agentic approach for clinical content localization, with AI-driven translation across 80+ countries and 120+ locales and quality control built into the review step, not bolted on after. That scale is part of what lets Medable run studies across 65+ countries with 99% on-time delivery (company-wide figures, not a result of my work).</p>
 </ContentSplit>
 
 <Callout eyebrow="The Chicago workshop" center>
@@ -151,8 +157,8 @@ Agent Studio is where these agents get built and managed: a library of AI agents
 </Callout>
 
 <LearningsGrid heading="Outcome" items={[
-  { icon: 'layers', title: 'Eliminated Support as a Workaround', description: "Routine data changes no longer route through Medable's support team, removing an entire manual handoff from the workflow." },
-  { icon: 'scale', title: 'Faster, Lower-Risk Turnaround', description: 'Correction turnaround time dropped and operational overhead fell along with it.' },
+  { icon: 'layers', title: 'Eliminated Support as a Workaround', description: "The workflow shipped. Routine data changes no longer route through Medable's support team, and success was measured by the support tickets that followed. In the 3 months after launch we received 0 against a goal of 0, because the aim was to automate the process entirely." },
+  { icon: 'scale', title: 'Lower-Risk, Built-In Approval', description: 'Changes that once waited on a developer to update records by hand now complete inside the platform, with the reason, approval and sign-off recorded.' },
   { icon: 'branch', title: 'Stronger CRA-PI Accountability', description: 'Direct selection, justification, and sign-off strengthened accountability between the two roles doing the work.' },
   { icon: 'eye', title: 'Reinforced Auditability and Trust', description: 'The new digital sign-off trail reinforced auditability and trust in the platform.' },
 ]} />

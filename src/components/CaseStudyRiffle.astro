@@ -33,7 +33,7 @@ const tabDots = (tx: number, tw: number) => {
 };
 ---
 
-<nav aria-label="Featured case studies" class={`rf ${className}`} data-riffle>
+<nav aria-label="Featured case studies" class={`rf ${className}`} data-riffle style={`--rf-n: ${entries.length}`}>
   <div class="rf-stage">
     <div class="rf-plane">
       <i class="rf-marker" data-m="0" aria-hidden="true"></i>
@@ -85,7 +85,7 @@ const tabDots = (tx: number, tw: number) => {
     --rf-pad-front: 22px;
     --rf-pad-back: 14px;
     --rf-line: #5a5a62;
-    --rf-long: calc(var(--rf-gap) * 7 + var(--rf-pad-front) + var(--rf-pad-back));
+    --rf-long: calc(var(--rf-gap) * (var(--rf-n) - 1) + var(--rf-pad-front) + var(--rf-pad-back));
     width: 100%;
   }
 
@@ -201,7 +201,7 @@ const tabDots = (tx: number, tw: number) => {
     width: calc(100% + var(--rf-pad-x) * 2);
     border-radius: 4px 4px 12px 12px;
     transform-origin: 50% 100%;
-    transform: translateY(calc(var(--rf-gap) * -7 - var(--rf-pad-back))) rotateX(-90deg);
+    transform: translateY(calc(var(--rf-gap) * (var(--rf-n) - 1) * -1 - var(--rf-pad-back))) rotateX(-90deg);
   }
 
   .rf-wall-right,
