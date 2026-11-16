@@ -3,6 +3,7 @@ import type { CollectionEntry } from 'astro:content';
 // Personal projects have no client name worth showing, so they get a display name.
 const displayNames: Record<string, string> = {
   'arizona-ballot-guide': 'Arizona Ballot Guide',
+  'arizona-rent-tracker': 'Arizona Rent Tracker',
   'battlefield-40000': 'Battlefield 40,000',
   'escape-from-tarkov': 'Escape from Tarkov concept',
 };

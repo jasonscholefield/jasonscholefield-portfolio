@@ -29,6 +29,7 @@ const work = defineCollection({
     stats: z.array(z.object({ label: z.string(), value: z.string() })).optional(),
     liveUrl: z.string().optional(),
     featured: z.boolean().default(false),
+    sideProject: z.boolean().default(false),
     order: z.number().default(0),
   }),
 });

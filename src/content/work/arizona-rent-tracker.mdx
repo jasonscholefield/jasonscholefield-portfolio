@@ -1,0 +1,129 @@
+---
+coverImage: "../../assets/work/arizona-rent-tracker.png"
+screenshots:
+  - "../../assets/work/arizona-rent-tracker/home.png"
+  - "../../assets/work/arizona-rent-tracker/complex.png"
+client: "Personal"
+title: "Tracking every apartment's rent day by day so renters can see what a place really costs"
+summary: "Advertised rent and move-in specials for Phoenix-metro apartment complexes, checked every morning on the landlords' own websites and kept as a price history."
+category: "Product Design"
+tags: ["0 to 1", "PropTech", "Price Tracking", "Data Pipeline"]
+year: "2026"
+role: "Designer & Developer"
+team: "Solo project: I designed and built it end to end."
+responsibilities: "0 to 1 product, data pipeline"
+tools: ["Vercel", "GitHub Actions"]
+liveUrl: "https://www.arizonarenttracker.com/"
+stats:
+  - label: "Complexes tracked"
+    value: "205"
+  - label: "Cities covered"
+    value: "21"
+  - label: "Price history"
+    value: "Checked daily since Jun 2025"
+featured: false
+sideProject: true
+order: 2.5
+---
+import ProjectOverview from '../../components/content/ProjectOverview.astro';
+import ContentSplit from '../../components/content/ContentSplit.astro';
+import ContentImageFeature from '../../components/content/ContentImageFeature.astro';
+import Callout from '../../components/content/Callout.astro';
+import ImpactStats from '../../components/ImpactStats.astro';
+import LearningsGrid from '../../components/content/LearningsGrid.astro';
+import homeImg from '../../assets/work/arizona-rent-tracker/home.png';
+import complexImg from '../../assets/work/arizona-rent-tracker/complex.png';
+import rentIndexImg from '../../assets/work/arizona-rent-tracker/rent-index.png';
+import negotiateImg from '../../assets/work/arizona-rent-tracker/negotiate.png';
+import affordImg from '../../assets/work/arizona-rent-tracker/afford.png';
+
+<ProjectOverview
+  goals={[
+    { title: 'Show the history, not just today:', description: 'keep a price history for every complex, so a renter can see what a place charged last week, last month and last year.' },
+    { title: 'Show what a renter would pay:', description: 'track move-in specials apart from advertised rent. Add estimates for the costs around it, like electricity and the cash due at move-in.' },
+    { title: 'Be honest about the data:', description: 'say that these are advertised prices, not signed leases. Explain where every number comes from.' },
+    { title: 'Help renters act on it:', description: 'turn the numbers into a negotiation guide, a rent calculator, side-by-side comparison and ranked lists of the best deals.' },
+  ]}
+>
+  <p>I wanted a resource that showed historical rent prices. I wanted to see when a complex raised or lowered its price and which specials it ran. I could not find that resource, so I built it. The idea sat with me for a few months. I started to build once I knew what the site should do. Every morning, it checks the advertised rent and move-in specials for 205 complexes in 21 Phoenix-area cities. It keeps each result, so every complex builds its own price history. The site launched in November 2026.</p>
+</ProjectOverview>
+
+<ContentSplit heading="The Problem" image={homeImg} imageAlt="The Arizona Rent Tracker homepage, with a search box, headline figures for median rent, price changes and specials, and a Phoenix metro price trend" imagePosition="right" notes={[
+  { label: 'What renters see', text: 'One price, today, on a listing site, with no sign of whether it is high or low for that complex.' },
+  { label: 'What renters need', text: 'The price history, the specials, and what the complex charged a month ago, so they know whether to sign now or wait.' },
+]}>
+  <p>Big apartment complexes set prices with software. The software reprices every day. A listing shows one number. The number that matters is what the same unit cost a few weeks earlier, and it is gone when you look.</p>
+  <p>Specials make it harder. A special like "six weeks free" lowers what you pay over the lease, but it is not part of the advertised rent. Two complexes with the same rent can cost very different amounts.</p>
+</ContentSplit>
+
+<Callout eyebrow="Problem to solve" center>
+  <p>Today's price is only half the story.</p>
+</Callout>
+
+## Strategy & Execution
+
+The site answers one question: is this a good price, and what should I do about it? Every page answers a part of it.
+
+1. Search by complex name, city or street, or browse by city
+2. See each complex's starting price, how it changed, and how it compares with its city
+3. Track specials apart from rent, so the real cost is visible
+4. Compare complexes, and rank them in lists like biggest price drops and best deals after specials
+5. Explain where every number comes from and what it does not mean
+
+<ContentImageFeature heading="Price, History and Real Cost on One Page" image={complexImg} imageAlt="A complex page showing its starting price, how it compares with the city median, an estimated electric bill by month, and a move-in cash calculator" preserveAspect>
+  <p>Each complex page starts with the starting price and how it changed. Next, it shows how the price compares with the city median and which way prices move across that city. Below that are costs that a listing never shows. One is an estimated monthly electric bill, based on the unit size and the utility at the address. The other is an editable calculator for the cash due at move-in.</p>
+  <p>Further down, a chart shows the advertised rent over time. The page compares the starting price with one month, three months, six months and one year ago. A special history shows when each special started and ended, and how many checks the dates come from.</p>
+</ContentImageFeature>
+
+<ContentImageFeature heading="A Rent Index That New Complexes Cannot Move" image={rentIndexImg} imageAlt="The Phoenix-area rent index page, with typical starting rent, changes over one, three and twelve months, a line chart, and a table by city" preserveAspect>
+  <p>The Phoenix-area rent index follows the typical starting rent over time. A simple average jumps each time a complex is added or dropped. To avoid this, each month's change comes only from complexes that had a price in both months. The index leaves out the most extreme 5% at each end. The monthly changes are then chained from June 2025. Thus a new complex never moves the index by itself.</p>
+  <p>The page shows the method next to the numbers. It also says what the index is not. It shows advertised starting prices, before specials and required fees. It does not show what current tenants pay at renewal.</p>
+</ContentImageFeature>
+
+## The Data Pipeline
+
+A crawler reads each landlord's public floor-plans page every morning at about 6:00 a.m. Arizona time. It runs on GitHub Actions, and the site runs on Vercel. The crawler records the advertised price, floor plan, availability and special. It collects no personal information. It follows each site's robots.txt rules and never gets around bot protection. The About page documents the crawler, which is called ArizonaRentTrackerBot. It also shows the one line a landlord can add to stop it.
+
+Some complex and management-company sites sit behind Cloudflare bot protection. These sites do not allow automatic scraping. I tried to find legal workarounds and did not find one. For now, I update these complexes by hand.
+
+The Internet Archive's Wayback Machine saved copies of the same landlord pages. I use these copies for history from before the daily checks. I read about one saved copy per week, so older history is weekly, not daily. For some complexes it goes back to July 2019.
+
+For Phoenix and Mesa complexes, the site also shows city code-enforcement complaints. Examples are broken AC, pests and leaks reported to the city. For Phoenix, it also shows eviction filings from Maricopa County Justice Courts data. The records match each complex's main address, so the counts are a floor. A complaint is not a confirmed violation. The site never collects tenant names or contact details.
+
+<Callout quote="Honest about the data: advertised prices, not signed leases." center />
+
+## What I Left Out
+
+Two features that I wanted did not fit the limits of the project.
+
+**Google review scores.** I wanted to show each complex's score. Google's API is free for a set number of calls each month, and it costs money after that. I left the score out. Each complex page links to its reviews on Google Maps instead.
+
+**Complex photos.** Most complexes do not allow others to reuse their images, so I chose not to use them. I am working on a solution.
+
+## Guidance, Not Just Data
+
+The numbers help only if a renter knows what to do with them. Two tools turn them into next steps.
+
+<ContentImageFeature heading="How to Negotiate Your Rent" image={negotiateImg} imageAlt="A six-step guide to negotiating rent, with what to ask for when the base rent will not move" preserveAspect>
+  <p>Software sets base rent at big complexes, and leasing staff usually cannot change it. The guide, in six steps, focuses on what surrounds the base rent. This includes a bigger special, waived fees, a different lease length, parking or a cheaper unit. It tells renters to compare effective rent, not advertised rent. It says when to start to talk about a renewal. It tells renters to get any special in writing before they sign. Messages to copy and fill in cover a new lease, a renewal and a counteroffer. These remove the hardest part, which is to know what to write.</p>
+</ContentImageFeature>
+
+<ContentImageFeature heading="How Much Rent Can You Afford?" image={affordImg} imageAlt="The rent calculator, which turns an income into a budget by the 30 percent rule and the landlord 3x rule" preserveAspect>
+  <p>The rent calculator turns an income into a budget. It uses the two rules that renters meet most. The first is rent at 30% of gross income. The second is the landlord's 3× rule. The calculator then shows how many tracked complexes fit the budget today. The count can use rent only, rent with specials, or rent plus required fees.</p>
+</ContentImageFeature>
+
+<ImpactStats
+  description="These figures come from the site on November 15, 2026. Analytics started only recently, so there is no traffic data yet. A weekly report shows where rents moved, who cut prices and who raised them, and which specials started or ended."
+  stats={[
+    { label: 'Complexes tracked', value: '205' },
+    { label: 'Cities covered', value: '21' },
+    { label: 'Weekly reports', value: '35' },
+  ]}
+/>
+
+<LearningsGrid items={[
+  { icon: 'eye', title: 'Honesty Builds the Product', description: 'Every number shows what it means and what it does not mean. Advertised prices are not signed leases. Code-enforcement counts are a floor. The index method sits next to the index. This makes the numbers easy to trust.' },
+  { icon: 'refresh', title: 'History Is the Product', description: 'A listing site shows today. A record kept every morning shows more. With archived pages for older history, a renter can see that a complex cut its price by hundreds of dollars in one month. A renter can also see that January is usually the cheapest month to sign across the metro.' },
+  { icon: 'compass', title: 'Data Needs a Next Step', description: 'A price history does not help a renter who does not know what to ask for. The negotiation guide and rent calculator turn the data into a next step that a renter can use the same day.' },
+  { icon: 'layers', title: 'Limits Set the Scope', description: 'Bot blockers, API costs and image rights each limited what I could build. I did not ignore them. I updated blocked complexes by hand, linked to Google Maps for reviews and left out photos.' },
+]} />
